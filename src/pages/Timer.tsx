@@ -1,7 +1,12 @@
 import React from 'react';
+import StopWatch from '../components/Timer/StopWatch';
 
 const Timer = () => {
-  return <div>타이머페이지다.</div>;
+  return (
+    <div>
+      <StopWatch />
+    </div>
+  );
 };
 
 export default Timer;
