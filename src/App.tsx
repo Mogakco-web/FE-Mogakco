@@ -1,21 +1,20 @@
-import React from 'react';
-import tw from 'tailwind-styled-components';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Main from './pages/Main';
+import Ranking from './pages/Ranking';
+import Timer from './pages/Timer';
+
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Hi>테일윈드 컴포넌트 테스트</Hi>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/main' element={<Main />}></Route>
+        <Route path='/rank' element={<Ranking />}></Route>
+        <Route path='/timer' element={<Timer />}></Route>
+      </Routes>
+    </>
   );
 }
 
 export default App;
-
-const Hi = tw.div`
-w-fit
-bg-red-500
-`;
