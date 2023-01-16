@@ -48,7 +48,7 @@ text-4xl
 p-2
 `;
 const Button = tw.button`
-bg-cpColor
+bg-purple
 p-2
 m-4
 rounded-lg
