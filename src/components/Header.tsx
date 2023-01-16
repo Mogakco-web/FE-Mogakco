@@ -56,7 +56,6 @@ const Header = () => {
 export default Header;
 
 const MyHeader = tw.div`
-bg-cpColor
 w-screen
 h-16
 p-3
