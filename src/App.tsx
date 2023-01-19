@@ -1,11 +1,15 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
+import TimeModal from './components/stopwatch/TimeModal';
+import useStopwatch from './hook/useStopwatch';
 import Home from './pages/Home';
 import Main from './pages/Main';
 import Ranking from './pages/Ranking';
-import Timer from './pages/Timer';
+import Stopwatch from './pages/Stopwatch';
 
 function App() {
+  const location = useLocation();
+  const stopwatchProps = useStopwatch();
   return (
     <>
       <Routes>
@@ -13,9 +17,12 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/main' element={<Main />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
-          <Route path='/timer' element={<Timer />}></Route>
+          <Route
+            path='/timer'
+            element={<Stopwatch props={stopwatchProps} />}></Route>
         </Route>
       </Routes>
+      {location.pathname !== '/timer' && <TimeModal />}
     </>
   );
 }
