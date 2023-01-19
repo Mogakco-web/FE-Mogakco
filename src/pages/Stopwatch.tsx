@@ -1,5 +1,6 @@
 import tw from 'tailwind-styled-components';
 import Time from '../components/stopwatch/Time';
+import TimeRecord from '../components/stopwatch/TimeRecord';
 
 interface StopwatchProps {
   props: {
@@ -15,28 +16,34 @@ const Stopwatch = (stopwatchProps: StopwatchProps) => {
 
   return (
     <Wrapper>
-      <div>
+      <StopwatchWrapp>
         <TimeWrap>
           <Time />
         </TimeWrap>
-
         <BtnWrap>
           {status === 'play' ? (
             <button onClick={onPause}>정지</button>
           ) : (
             <button onClick={onStart}>시작</button>
           )}
-          <button onClick={onReset}>초기화</button>
+          {/* <button onClick={onReset}>초기화</button> */}
         </BtnWrap>
-      </div>
+      </StopwatchWrapp>
+      <TimeRecord />
     </Wrapper>
   );
 };
 
 const Wrapper = tw.div`
+
+`;
+
+const StopwatchWrapp = tw.div`
 flex
 justify-center
 items-center
+flex-col
+h-96
 `;
 
 const TimeWrap = tw.div`
@@ -44,9 +51,7 @@ text-8xl
 `;
 
 const BtnWrap = tw.div`
-flex
-justify-around
-text-2xl
+text-3xl
 mt-10
 `;
 

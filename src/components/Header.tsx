@@ -56,6 +56,9 @@ const Header = () => {
 export default Header;
 
 const MyHeader = tw.div`
+sticky
+top-0
+z-10
 w-screen
 h-16
 p-3
@@ -69,6 +72,7 @@ w-12
 const MenuContainer = tw.div`
 flex
 gap-3
+
 `;
 const Menu = tw.li`
 list-none
