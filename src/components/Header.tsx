@@ -45,8 +45,8 @@ const Header = () => {
         alt='모각코 로고'
       />
       <nav>
-        <GuestNav />
-        {/* <MemberNav /> */}
+        {/* <GuestNav /> */}
+        <MemberNav />
       </nav>
       {/* <nav>{isLogged ? <MemberNav /> : <GuestNav />}</nav> */}
     </MyHeader>

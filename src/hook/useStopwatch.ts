@@ -49,7 +49,6 @@ const useStopwatch = () => {
   }, [playTimeout, setTime, time, status]);
 
   return {
-    time,
     status,
     onStart,
     onPause,

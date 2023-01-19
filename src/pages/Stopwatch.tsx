@@ -1,15 +1,8 @@
 import tw from 'tailwind-styled-components';
-import { formatTime } from '../utils/stopwatch';
-
-interface ITime {
-  second: number;
-  minute: number;
-  hour: number;
-}
+import Time from '../components/stopwatch/Time';
 
 interface StopwatchProps {
   props: {
-    time: ITime;
     status: string;
     onStart: () => void;
     onPause: () => void;
@@ -18,12 +11,15 @@ interface StopwatchProps {
 }
 
 const Stopwatch = (stopwatchProps: StopwatchProps) => {
-  const { time, status, onStart, onPause, onReset } = stopwatchProps.props;
+  const { status, onStart, onPause, onReset } = stopwatchProps.props;
 
   return (
     <Wrapper>
       <div>
-        <StopwatchView>{formatTime(time)}</StopwatchView>
+        <TimeWrap>
+          <Time />
+        </TimeWrap>
+
         <BtnWrap>
           {status === 'play' ? (
             <button onClick={onPause}>정지</button>
@@ -43,9 +39,7 @@ justify-center
 items-center
 `;
 
-const StopwatchView = tw.div`
-flex
-justify-center
+const TimeWrap = tw.div`
 text-8xl
 `;
 
@@ -55,4 +49,5 @@ justify-around
 text-2xl
 mt-10
 `;
+
 export default Stopwatch;
