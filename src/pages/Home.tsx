@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
 
 const Home = () => {
@@ -7,7 +8,9 @@ const Home = () => {
       <Contents>
         <Title>모각코에서 같이 커밋해요!</Title>
         <p>리워드, 랭킹을 통한 동기부여로 더더욱 성장하게 된답니다.</p>
-        <Button>무료로 시작하세요</Button>
+        <Button>
+          <Link to='/login'>무료로 시작하세요</Link>
+        </Button>
         <Image src='https://user-images.githubusercontent.com/65716445/212556936-bab5b444-6f65-4118-a5d9-e6a0036a44bb.png'></Image>
       </Contents>
       <SubContents>
@@ -48,16 +51,18 @@ text-4xl
 p-2
 `;
 const Button = tw.button`
-bg-purple
+bg-gradient-to-r from-purple to-blue
 p-2
 m-4
 rounded-lg
-hover:bg-
+hover:from-red hover:to-yellow
+text-white
 `;
 const Image = tw.img`
 w-100
-rounded-lg
-m-4
+rounded-xl
+mt-10
+shadow-2xl
 `;
 const SubContents = tw.div`
 flex
@@ -65,6 +70,9 @@ items-center
 justify-between
 px-[100px]
 pb-[100px]
+shadow-xl
+rounded-2xl
+mb-14
 `;
 const Intro = tw.div`
 flex
@@ -77,5 +85,5 @@ text-2xl
 const SubImage = tw.img`
 w-80
 rounded-lg
-m-4
+mt-12
 `;
