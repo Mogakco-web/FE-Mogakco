@@ -17,7 +17,7 @@ module.exports = {
       dullBlue: '#40739e',
       red: '#e84118',
       dullRed: '#c23616',
-      while: '#f5f6fa',
+      white: '#f5f6fa',
       dullWhite: '#dcdde1',
       grey: '#7f8fa6',
       dullGrey: '#718093',

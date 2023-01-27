@@ -40,10 +40,11 @@ const GuestNav = () => {
 const Header = () => {
   return (
     <MyHeader>
-      <Logo
-        src={`${process.env.PUBLIC_URL}/mogakco_logo.png`}
-        alt='모각코 로고'
-      />
+      <Link to='/'>
+        <Logo
+          src={`${process.env.PUBLIC_URL}/mogakco_logo.png`}
+          alt='모각코 로고'></Logo>
+      </Link>
       <nav>
         {/* <GuestNav /> */}
         <MemberNav />
@@ -72,7 +73,7 @@ w-12
 const MenuContainer = tw.div`
 flex
 gap-3
-
+m-5
 `;
 const Menu = tw.li`
 list-none
