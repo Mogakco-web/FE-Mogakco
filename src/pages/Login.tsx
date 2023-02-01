@@ -16,4 +16,5 @@ export default Login;
 
 const Button = tw.button`
 bg-sky
+m-2
 `;

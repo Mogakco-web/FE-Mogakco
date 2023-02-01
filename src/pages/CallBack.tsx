@@ -1,20 +1,23 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import userStore from '../store/userStore';
 
 const CallBack = () => {
+  const { isLogin, handleIsLogin } = userStore();
   const navigate = useNavigate();
-  console.log(getCode('code'));
+  const code = getCode('code');
+  const postCode = async () => {
+    try {
+      const result = await axios.get(`/api/v1/githubLogin?code=${code}`);
+      console.log(result);
+      handleIsLogin();
+      navigate(`/`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const postCode = async () => {
-      getCode('code');
-      try {
-        // const response = await axios.post(``);
-        navigate(`/`);
-      } catch (err) {
-        console.log(err);
-      }
-    };
     postCode();
   }, []);
   return <>로딩 중</>;
