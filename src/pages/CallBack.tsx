@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import userStore from '../store/userStore';
 
 const CallBack = () => {
-  const { isLogin, handleIsLogin } = userStore();
+  const { isLogin, handleIsLogin, setUserInfo } = userStore();
   const navigate = useNavigate();
   const code = getCode('code');
   const postCode = async () => {
@@ -12,6 +12,7 @@ const CallBack = () => {
       const result = await axios.get(`/api/v1/githubLogin?code=${code}`);
       console.log(result);
       handleIsLogin();
+      setUserInfo(result.data.login, result.data.avatar_url);
       navigate(`/`);
     } catch (err) {
       console.log(err);

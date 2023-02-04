@@ -1,17 +1,29 @@
 import create from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { persist, devtools } from 'zustand/middleware';
+
 interface IStore {
   isLogin: boolean;
-  userName: String;
+  userInfo: object;
   handleIsLogin: () => void;
+  setUserInfo: (userId: string, userImg: string) => void;
 }
 
 const userStore = create<IStore>()(
-  devtools((set) => ({
-    isLogin: false,
-    userName: '',
-    handleIsLogin: () => set((state) => ({ isLogin: !state.isLogin })),
-  })),
+  devtools(
+    persist(
+      (set) => ({
+        isLogin: false,
+        userInfo: { userId: '', userImg: '' },
+        handleIsLogin: () => set((state) => ({ isLogin: !state.isLogin })),
+        setUserInfo: (userId, userImg) =>
+          set((state) => ({
+            ...state,
+            userInfo: { userId: userId, userImg: userImg },
+          })),
+      }),
+      { name: 'user-storage' },
+    ),
+  ),
 );
 
 export default userStore;
