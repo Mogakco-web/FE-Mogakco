@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import userStore from '../store/userStore';
 
 const CallBack = () => {
-  const { isLogin, handleIsLogin, setUserInfo } = userStore();
+  const { handleIsLogin, setUserInfo } = userStore();
   const navigate = useNavigate();
   const code = getCode('code');
   const postCode = async () => {
