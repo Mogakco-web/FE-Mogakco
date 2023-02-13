@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import userStore from '../store/userStore';
 import tw from 'tailwind-styled-components';
 const MemberNav = () => {
   return (
@@ -38,6 +39,7 @@ const GuestNav = () => {
   );
 };
 const Header = () => {
+  const { isLogin } = userStore();
   return (
     <MyHeader>
       <Link to='/'>
@@ -45,11 +47,7 @@ const Header = () => {
           src={`${process.env.PUBLIC_URL}/mogakco_logo.png`}
           alt='모각코 로고'></Logo>
       </Link>
-      <nav>
-        {/* <GuestNav /> */}
-        <MemberNav />
-      </nav>
-      {/* <nav>{isLogged ? <MemberNav /> : <GuestNav />}</nav> */}
+      <nav>{isLogin ? <MemberNav /> : <GuestNav />}</nav>
     </MyHeader>
   );
 };

@@ -1,16 +1,29 @@
 import create from 'zustand';
+import { persist, devtools } from 'zustand/middleware';
 
 interface IStore {
-  isDark: boolean;
-  handleIsDark: () => void;
+  isLogin: boolean;
+  userInfo: object;
+  handleIsLogin: () => void;
+  setUserInfo: (userId: string, userImg: string) => void;
 }
 
-const useStore = create<IStore>((set) => ({
-  isDark: false,
-  handleIsDark: () => set((state) => ({ isDark: !state.isDark })),
-}));
+const userStore = create<IStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        isLogin: false,
+        userInfo: { userId: '', userImg: '' },
+        handleIsLogin: () => set((state) => ({ isLogin: !state.isLogin })),
+        setUserInfo: (userId, userImg) =>
+          set((state) => ({
+            ...state,
+            userInfo: { userId: userId, userImg: userImg },
+          })),
+      }),
+      { name: 'user-storage' },
+    ),
+  ),
+);
 
-export default useStore;
-
-// 사용 방법
-// `const { isDark, handleIsDark } = useStore();` 처럼 구조분해할당 구조로 가져가 사용하면 된다.
+export default userStore;
