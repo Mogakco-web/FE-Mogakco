@@ -2,8 +2,7 @@ import React from 'react';
 import tw from 'tailwind-styled-components';
 import userStore from '../store/userStore';
 
-const loginUrl = `https://github.com/login/oauth/authorize?client_id=aed31f0dad5ed858d765&scope=repo:status read:repo_hook user:email&redirect_uri=http://localhost:3000/callback`;
-
+const loginUrl = `http://3.36.247.153:8080/oauth2/authorization/github`;
 const Login = () => {
   const { handleIsLogin, setUserInfo } = userStore();
   return (
