@@ -5,12 +5,15 @@ import userStore from '../store/userStore';
 const CallBack = () => {
   const { handleIsLogin } = userStore();
   const navigate = useNavigate();
-  const accessToken = getToken('accessToken');
-  const refreshToken = getToken('refreshToken');
+  const accessToken = getTokenParam('accessToken');
+  const refreshToken = getTokenParam('refreshToken');
+  const authToken = getTokenParam('AuthToken');
 
   const setToken = () => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('authToken', authToken);
+
     handleIsLogin();
     navigate(`/`);
   };
@@ -22,6 +25,6 @@ const CallBack = () => {
 
 export default CallBack;
 
-function getToken(key: string) {
+function getTokenParam(key: string) {
   return new URLSearchParams(window.location.search).get(key) as string;
 }
