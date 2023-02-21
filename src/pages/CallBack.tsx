@@ -1,24 +1,30 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import userStore from '../store/userStore';
 
 const CallBack = () => {
-  const { handleIsLogin } = userStore();
+  const { handleIsLogin, setUserInfo } = userStore();
   const navigate = useNavigate();
   const accessToken = getTokenParam('accessToken');
   const refreshToken = getTokenParam('refreshToken');
-  const authToken = getTokenParam('AuthToken');
 
   const setToken = () => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('authToken', authToken);
-
     handleIsLogin();
     navigate(`/`);
   };
+  const getUserInfo = async () => {
+    const res = await axios.get(`/api/v1/member/userInfo/one`, {
+      headers: { Authorization_refresh: `${refreshToken}` },
+    });
+    localStorage.setItem('authToken', res.data.authToken);
+    setUserInfo(res.data.nickname, res.data.member_imgUrl);
+  };
   useEffect(() => {
     setToken();
+    getUserInfo();
   }, []);
   return <>로딩 중</>;
 };
