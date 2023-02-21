@@ -5,7 +5,7 @@ interface IStore {
   isLogin: boolean;
   userInfo: object;
   handleIsLogin: () => void;
-  setUserInfo: (userId: string, userImg: string) => void;
+  setUserInfo: (userId: string, userImg: string, userOauthId: string) => void;
 }
 
 const userStore = create<IStore>()(
@@ -13,12 +13,16 @@ const userStore = create<IStore>()(
     persist(
       (set) => ({
         isLogin: false,
-        userInfo: { userId: '', userImg: '' },
+        userInfo: { userId: '', userImg: '', userOauthId: '' },
         handleIsLogin: () => set((state) => ({ isLogin: !state.isLogin })),
-        setUserInfo: (userId, userImg) =>
+        setUserInfo: (userId, userImg, userOauthId) =>
           set((state) => ({
             ...state,
-            userInfo: { userId: userId, userImg: userImg },
+            userInfo: {
+              userId: userId,
+              userImg: userImg,
+              userOauthId: userOauthId,
+            },
           })),
       }),
       { name: 'user-storage' },

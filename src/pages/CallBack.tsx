@@ -19,8 +19,9 @@ const CallBack = () => {
     const res = await axios.get(`/api/v1/member/userInfo/one`, {
       headers: { Authorization_refresh: `${refreshToken}` },
     });
+    // console.log(res);
     localStorage.setItem('authToken', res.data.authToken);
-    setUserInfo(res.data.nickname, res.data.member_imgUrl);
+    setUserInfo(res.data.nickname, res.data.member_imgUrl, res.data.oauthId);
   };
   useEffect(() => {
     setToken();

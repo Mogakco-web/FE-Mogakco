@@ -15,7 +15,7 @@ const Login = () => {
     // const result = await axios.delete('/api/v1/eliminate/authToken', config);
     // console.log(result);
     handleIsLogin();
-    setUserInfo('', '');
+    setUserInfo('', '', '');
   };
   return (
     <>
