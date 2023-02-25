@@ -1,28 +1,37 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { userApis } from '../api/ApiController';
 import userStore from '../store/userStore';
-
 const CallBack = () => {
   const { handleIsLogin, setUserInfo } = userStore();
   const navigate = useNavigate();
-  const accessToken = getTokenParam('accessToken');
-  const refreshToken = getTokenParam('refreshToken');
 
   const setToken = () => {
+    const accessToken = getTokenParam('accessToken');
+    const refreshToken = getTokenParam('refreshToken');
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
     handleIsLogin();
     navigate(`/`);
   };
-  const getUserInfo = async () => {
-    const res = await axios.get(`/api/v1/member/userInfo/one`, {
-      headers: { Authorization_refresh: `${refreshToken}` },
-    });
-    // console.log(res);
-    localStorage.setItem('authToken', res.data.authToken);
-    setUserInfo(res.data.nickname, res.data.member_imgUrl, res.data.oauthId);
+
+  const getUserInfo = () => {
+    userApis
+      .userInfo()
+      .then((res) => {
+        localStorage.setItem('authToken', res.data.authToken);
+        setUserInfo(
+          res.data.nickname,
+          res.data.member_imgUrl,
+          res.data.oauthId,
+        );
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   useEffect(() => {
     setToken();
     getUserInfo();
