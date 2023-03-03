@@ -19,6 +19,9 @@ const TodoList = ({ filter }: any) => {
   const handleModify = (modified: any) => {
     setList(list.map((t) => (t.id === modified.id ? modified : t)));
   };
+  const handleDelete = (deleted: any) => {
+    setList(list.filter((t) => t.id !== deleted.id));
+  };
   const filtered = list.filter((item) => item.category === filter);
 
   return (
@@ -26,7 +29,12 @@ const TodoList = ({ filter }: any) => {
       <Category>{filter}</Category>
       <ul>
         {filtered.map((item) => (
-          <Todo key={item.id} todo={item} onModify={handleModify} />
+          <Todo
+            key={item.id}
+            todo={item}
+            onModify={handleModify}
+            onDelete={handleDelete}
+          />
         ))}
       </ul>
 

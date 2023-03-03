@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FiEdit3 } from 'react-icons/fi';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+
 import tw from 'tailwind-styled-components';
 
-const Todo = ({ todo, onModify }: any) => {
+const Todo = ({ todo, onModify, onDelete }: any) => {
   const { title, category } = todo;
   //todo title 수정
   const [text, setText] = useState(title);
@@ -16,18 +18,24 @@ const Todo = ({ todo, onModify }: any) => {
     onModify({ ...todo, title: text });
     setIsChecked(false);
   };
+  const handleDelete = (e: any) => onDelete(todo);
 
   return (
     <>
       {!isChecked ? (
         <Title>
           {title}
-          <button
-            onClick={() => {
-              setIsChecked((prev) => !prev);
-            }}>
-            <FiEdit3 />
-          </button>
+          <Icon>
+            <button
+              onClick={() => {
+                setIsChecked((prev) => !prev);
+              }}>
+              <FiEdit3 />
+            </button>
+            <button onClick={handleDelete}>
+              <RiDeleteBin5Line />
+            </button>
+          </Icon>
         </Title>
       ) : (
         <Form onSubmit={handleSubmit}>
@@ -56,6 +64,10 @@ shadow-md
 m-2
 p-1
 `;
+const Icon = tw.div`
+flex
+gap-2
+`;
 const Form = tw.form`
 flex
 h-fit
@@ -64,6 +76,8 @@ m-2
 `;
 const Input = tw.input`
 h-7
+w-[257px]
+p-1
 rounded-sm
 `;
 const Button = tw.button`
