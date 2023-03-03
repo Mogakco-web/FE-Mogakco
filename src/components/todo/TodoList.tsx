@@ -14,16 +14,17 @@ const TodoList = ({ filter }: any) => {
   }) => {
     setList([...list, todo]);
   };
-  const handleModify = (text: { title: string }) => {};
+  const handleModify = (modified: any) => {
+    setList(list.map((t) => (t.id === modified.id ? modified : t)));
+  };
   const filtered = list.filter((item) => item.category === filter);
-  // console.log(filtered);
 
   return (
     <Section>
       <Category>{filter}</Category>
       <ul>
         {filtered.map((item) => (
-          <Todo key={item.id} todo={item} onUpdate={handleModify} />
+          <Todo key={item.id} todo={item} onModify={handleModify} />
         ))}
       </ul>
       <AddTodo onAdd={handleAdd} />
