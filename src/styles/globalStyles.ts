@@ -3,14 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyles = createGlobalStyle`
 
 @font-face {
-    font-family: 'NanumSquareNeo-Variable';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
   body {
-    font-family: 'NanumSquareNeo-Variable';
+    font-family: 'SUIT-Regular';
     width: 100vw;
     margin: 0;
     padding: 0;

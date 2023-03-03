@@ -7,7 +7,6 @@ const Todo = ({ todo, onModify }: any) => {
   //todo title 수정
   const [text, setText] = useState(title);
   const [isChecked, setIsChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
@@ -53,6 +52,7 @@ flex
 justify-between
 cursor-pointer
 rounded-sm
+shadow-md
 m-2
 p-1
 `;
@@ -63,7 +63,6 @@ justify-center
 m-2
 `;
 const Input = tw.input`
-w-[245px]
 h-7
 rounded-sm
 `;

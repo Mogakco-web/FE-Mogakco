@@ -17,15 +17,17 @@ const AddTodo = ({ onAdd }: any) => {
     setText('');
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        type='text'
-        placeholder='Add Todo'
-        value={text}
-        onChange={handleChange}
-      />
-      <Button>+</Button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type='text'
+          placeholder='Enter a title fot this todo!'
+          value={text}
+          onChange={handleChange}
+        />
+        <Button>Add Todo</Button>
+      </Form>
+    </>
   );
 };
 
@@ -33,17 +35,28 @@ export default AddTodo;
 
 const Form = tw.form`
 flex
-h-fit
-justify-center
+flex-col
+justify-between
+rounded-sm
 m-2
+p-1
 `;
 const Input = tw.input`
-w-[245px]
-h-7
+bg-white
+h-10
+p-1
+ml-1
+mb-1
 rounded-sm
 `;
 const Button = tw.button`
 bg-dullSky
-w-6
+opacity-90
+text-white
+text-sm
+p-1
+ml-auto
 rounded-sm
+flex
+justify-end
 `;

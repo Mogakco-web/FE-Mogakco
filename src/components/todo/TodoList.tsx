@@ -3,9 +3,11 @@ import Todo from './Todo';
 import tw from 'tailwind-styled-components';
 import AddTodo from './AddTodo';
 import data from './mockup-data.json';
+import { FiX } from 'react-icons/fi';
 
 const TodoList = ({ filter }: any) => {
   const [list, setList] = useState(data);
+  const [addOpen, setAddOpen] = useState(false);
   const handleAdd = (todo: {
     id: string;
     title: string;
@@ -27,7 +29,25 @@ const TodoList = ({ filter }: any) => {
           <Todo key={item.id} todo={item} onModify={handleModify} />
         ))}
       </ul>
-      <AddTodo onAdd={handleAdd} />
+
+      {addOpen ? (
+        <AddCard>
+          <XButton
+            onClick={() => {
+              setAddOpen((prev) => !prev);
+            }}>
+            <FiX />
+          </XButton>
+          <AddTodo onAdd={handleAdd} />
+        </AddCard>
+      ) : (
+        <Button
+          onClick={() => {
+            setAddOpen((prev) => !prev);
+          }}>
+          + Add a todo
+        </Button>
+      )}
     </Section>
   );
 };
@@ -42,8 +62,32 @@ p-2
 flex
 flex-col
 rounded-md
+shadow-inner
 `;
 const Category = tw.h2`
 font-bold
 m-2
+`;
+const Button = tw.button`
+text-dullGrey
+m-2
+p-1
+flex
+justify-start
+`;
+const AddCard = tw.div`
+flex
+flex-col
+bg-white
+shadow-md
+rounded-sm
+m-2
+`;
+const XButton = tw.button`
+text-dullGrey
+p-1
+ml-auto
+w-fit
+flex
+justify-end
 `;
