@@ -3,7 +3,8 @@ import Todo from './Todo';
 import tw from 'tailwind-styled-components';
 import AddTodo from './AddTodo';
 import data from './mockup-data.json';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiMoreHorizontal } from 'react-icons/fi';
+import Category from './Category';
 
 const TodoList = ({ filter }: any) => {
   const [list, setList] = useState(data);
@@ -26,7 +27,7 @@ const TodoList = ({ filter }: any) => {
 
   return (
     <Section>
-      <Category>{filter}</Category>
+      <Category filter={filter}></Category>
       <ul>
         {filtered.map((item) => (
           <Todo
@@ -70,11 +71,7 @@ p-2
 flex
 flex-col
 rounded-md
-shadow-inner
-`;
-const Category = tw.h2`
-font-bold
-m-2
+shadow-sm
 `;
 const Button = tw.button`
 text-dullGrey
