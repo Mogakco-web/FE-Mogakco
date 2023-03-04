@@ -4,6 +4,7 @@ import { FiChevronUp, FiMoreHorizontal } from 'react-icons/fi';
 
 const Category = ({ filter }: any) => {
   const [view, setView] = useState(false);
+  const handleDelete = (e: any) => {};
   return (
     <Div>
       <Name>{filter}</Name>
@@ -22,7 +23,7 @@ const Category = ({ filter }: any) => {
               {view && (
                 <Dropdown>
                   <li>삭제</li>
-                  <li>수정</li>
+                  <li onClick={handleDelete}>수정</li>
                 </Dropdown>
               )}
             </div>

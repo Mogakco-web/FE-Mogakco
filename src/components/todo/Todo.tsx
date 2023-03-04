@@ -5,7 +5,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import tw from 'tailwind-styled-components';
 
 const Todo = ({ todo, onModify, onDelete }: any) => {
-  const { title, category } = todo;
+  const { title } = todo;
   //todo title 수정
   const [text, setText] = useState(title);
   const [isChecked, setIsChecked] = useState(false);
@@ -18,6 +18,7 @@ const Todo = ({ todo, onModify, onDelete }: any) => {
     onModify({ ...todo, title: text });
     setIsChecked(false);
   };
+  //todo 삭제
   const handleDelete = (e: any) => onDelete(todo);
 
   return (

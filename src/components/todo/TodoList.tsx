@@ -3,7 +3,7 @@ import Todo from './Todo';
 import tw from 'tailwind-styled-components';
 import AddTodo from './AddTodo';
 import data from './mockup-data.json';
-import { FiX, FiMoreHorizontal } from 'react-icons/fi';
+import { FiX } from 'react-icons/fi';
 import Category from './Category';
 
 const TodoList = ({ filter }: any) => {
@@ -24,7 +24,9 @@ const TodoList = ({ filter }: any) => {
     setList(list.filter((t) => t.id !== deleted.id));
   };
   const filtered = list.filter((item) => item.category === filter);
-
+  // console.log(filtered);
+  console.log(filter);
+  console.log(list);
   return (
     <Section>
       <Category filter={filter}></Category>
@@ -47,7 +49,7 @@ const TodoList = ({ filter }: any) => {
             }}>
             <FiX />
           </XButton>
-          <AddTodo onAdd={handleAdd} />
+          <AddTodo onAdd={handleAdd} category={filter} />
         </AddCard>
       ) : (
         <Button

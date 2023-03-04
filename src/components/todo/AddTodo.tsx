@@ -3,8 +3,10 @@ import tw from 'tailwind-styled-components';
 
 //임시 임의의 id값 위해서
 let random = 9;
-const AddTodo = ({ onAdd }: any) => {
+const AddTodo = ({ onAdd, category }: any) => {
   const [text, setText] = useState('');
+  console.log(category);
+
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
@@ -13,7 +15,7 @@ const AddTodo = ({ onAdd }: any) => {
     //임시 임의의 id값 위해서
     random++;
     if (text.trim().length === 0) return;
-    onAdd({ id: random, title: text, contents: '', category: 'Todo' });
+    onAdd({ id: random, title: text, contents: '', category });
     setText('');
   };
   return (
