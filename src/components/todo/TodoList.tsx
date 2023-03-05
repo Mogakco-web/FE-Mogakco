@@ -25,8 +25,7 @@ const TodoList = ({ filter }: any) => {
   };
   const filtered = list.filter((item) => item.category === filter);
   // console.log(filtered);
-  console.log(filter);
-  console.log(list);
+  // console.log(list);
   return (
     <Section>
       <Category filter={filter}></Category>
