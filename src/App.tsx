@@ -8,6 +8,7 @@ import CallBack from './pages/CallBack';
 import Main from './pages/Main';
 import Ranking from './pages/Ranking';
 import Stopwatch from './pages/Stopwatch';
+import TodoPage from './pages/TodoPage';
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
           <Route path='/main' element={<Main />}></Route>
           <Route path='/callback' element={<CallBack />}></Route>
+          <Route path='/todo' element={<TodoPage />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
           <Route
             path='/timer'
