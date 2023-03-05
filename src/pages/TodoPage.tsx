@@ -42,8 +42,8 @@ flex-wrap
 gap-4
 `;
 const AddBox = tw.div`
-bg-dullWhite
-opacity-80
+bg-gray-300
+text-gray-600
 flex
 flex-col
 rounded-md
@@ -51,6 +51,7 @@ cursor-pointer
 h-fit
 w-[300px]
 p-3
+shadow-inner
 `;
 const XButton = tw.button`
 text-dullGrey

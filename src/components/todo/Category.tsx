@@ -108,6 +108,8 @@ rounded-sm
 `;
 const Button = tw.button`
 text-sm
+text-white
+opacity-90
 bg-dullSky
 w-fit
 p-1

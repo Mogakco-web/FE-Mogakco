@@ -47,8 +47,8 @@ rounded-sm
 `;
 const Button = tw.button`
 bg-dullSky
-opacity-90
 text-white
+opacity-90
 text-sm
 p-1
 mt-2

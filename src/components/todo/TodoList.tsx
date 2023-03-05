@@ -65,7 +65,7 @@ const TodoList = ({ filter }: any) => {
 export default TodoList;
 
 const Section = tw.section`
-bg-dullWhite
+bg-gray-300
 w-[300px]
 h-full
 p-2
@@ -75,7 +75,7 @@ rounded-md
 shadow-sm
 `;
 const Button = tw.button`
-text-dullGrey
+text-gray-600
 m-2
 p-1
 flex
