@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
 import TimeModal from './components/stopwatch/TimeModal';
-import useStopwatch from './hook/useStopwatch';
+import useStopwatch from './hook/stopwatch';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import CallBack from './pages/CallBack';
@@ -13,6 +13,8 @@ import TodoPage from './pages/TodoPage';
 function App() {
   const location = useLocation();
   const stopwatchProps = useStopwatch();
+  const hiddenPaths: string[] = ['/', '/timer', '/login'];
+
   return (
     <>
       <Routes>
@@ -28,7 +30,7 @@ function App() {
             element={<Stopwatch props={stopwatchProps} />}></Route>
         </Route>
       </Routes>
-      {location.pathname !== '/timer' && <TimeModal />}
+      {!hiddenPaths.includes(location.pathname) && <TimeModal />}
     </>
   );
 }

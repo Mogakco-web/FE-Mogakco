@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import useStopwatchStore from '../store/stopwatchStore';
+import useStopwatchStore from '../../store/stopwatch';
 
 const useStopwatch = () => {
   const { time, setTime, setTimeClear } = useStopwatchStore();
