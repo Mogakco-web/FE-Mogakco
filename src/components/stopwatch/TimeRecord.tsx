@@ -10,7 +10,10 @@ const TimeRecord = () => {
   );
 };
 const Wrapper = tw.div`
+bg-white
+w-[19%]
 text-center
+h-[45vh]
 `;
 const Record = tw.div`
 text-xl

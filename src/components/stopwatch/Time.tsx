@@ -1,6 +1,6 @@
 import useStopwatchStore from '../../store/stopwatch';
 import tw from 'tailwind-styled-components';
-import { formatTime } from '../../utils/stopwatch';
+import { formatTime } from '../../utils/stopwatch/index';
 
 const Time = () => {
   const { time } = useStopwatchStore();

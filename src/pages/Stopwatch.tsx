@@ -16,7 +16,7 @@ const Stopwatch = (stopwatchProps: StopwatchProps) => {
 
   return (
     <Wrapper>
-      <StopwatchWrapp>
+      <StopwatchWrap>
         <TimeWrap>
           <Time />
         </TimeWrap>
@@ -28,22 +28,29 @@ const Stopwatch = (stopwatchProps: StopwatchProps) => {
           )}
           {/* <button onClick={onReset}>초기화</button> */}
         </BtnWrap>
-      </StopwatchWrapp>
+      </StopwatchWrap>
       <TimeRecord />
     </Wrapper>
   );
 };
 
 const Wrapper = tw.div`
-
+flex
+justify-between
+items-center
+bg-sky
+p-[10px]
 `;
 
-const StopwatchWrapp = tw.div`
+const StopwatchWrap = tw.div`
 flex
+flex-col
 justify-center
 items-center
-flex-col
-h-96
+p-[30px]
+bg-white
+w-[80%]
+h-[45vh]
 `;
 
 const TimeWrap = tw.div`
@@ -52,7 +59,9 @@ text-8xl
 
 const BtnWrap = tw.div`
 text-3xl
-mt-10
+mt-20
+bg-red
+p-2
 `;
 
 export default Stopwatch;
