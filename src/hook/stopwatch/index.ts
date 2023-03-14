@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import useStopwatchStore from '../../store/stopwatch';
-import { formatTime } from '../../utils/stopwatch';
+import { formatTime, transDate } from '../../utils/stopwatch';
 import userStore from '../../store/userStore';
 const useStopwatch = () => {
   const { time, setTime, setTimeClear } = useStopwatchStore();
+
   const playTimeout = useRef<NodeJS.Timeout | null>(null);
   const startTime = useRef<number | null>(null);
   const pauseTime = useRef<number | null>(null);
@@ -33,7 +34,8 @@ const useStopwatch = () => {
           hours,
           minute,
           second,
-          user_oauthId: userInfo.userOauthId,
+          localDate: transDate(),
+          oauthId: userInfo.userOauthId,
         })
         .then((res) => console.log(res));
     }
