@@ -2,7 +2,6 @@ import React from 'react';
 import tw from 'tailwind-styled-components';
 import userStore from '../store/userStore';
 import { userApis } from '../api/ApiController';
-import axios from 'axios';
 
 const loginUrl: string = `http://3.38.8.89:8080/oauth2/authorization/github`;
 
@@ -29,8 +28,8 @@ const Login = () => {
       </Button>
       <Button onClick={Logout}>임시 로그아웃</Button>
       <Button
-        onClick={() => {
-          axios.post('api/v1/healthcheck').then((res) => console.log(res));
+        onClick={async () => {
+          userApis.healthCheck().then((res) => console.log(res));
         }}>
         헬스 체크
       </Button>

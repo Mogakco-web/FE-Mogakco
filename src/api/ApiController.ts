@@ -1,8 +1,29 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-// const api = axios.create();
+const api = axios.create({ withCredentials: true });
 
-axios.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
+export const userApis = {
+  userInfo: async () => {
+    const res = await api.get(`/api/v1/member/userInfo/one`);
+    return res;
+  },
+  logOut: async (data: string | null) => {
+    const res = await api.delete(
+      `/api/v1/eliminate/authToken?authToken=${data}`,
+    );
+    return res;
+  },
+  tokenRefresh: async () => {
+    const res = await api.get('/api/v1/member/userInfo/access');
+    return res;
+  },
+  healthCheck: async () => {
+    const res = await api.post('/api/v1/healthcheck');
+    return res;
+  },
+};
+
+api.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   const accessToken: string | null = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authToken: string | null = localStorage.getItem('authToken');
@@ -26,24 +47,7 @@ axios.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   return requestConfig;
 });
 
-export const userApis = {
-  userInfo: async () => {
-    const res = await axios.get(`/api/v1/member/userInfo/one`);
-    return res;
-  },
-  logOut: async (data: string | null) => {
-    const res = await axios.delete(
-      `/api/v1/eliminate/authToken?authToken=${data}`,
-    );
-    return res;
-  },
-  tokenRefresh: async () => {
-    const res = await axios.get('/api/v1/member/userInfo/access');
-    return res;
-  },
-};
-
-axios.interceptors.response.use(
+api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const {
@@ -81,3 +85,4 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+export default api;
