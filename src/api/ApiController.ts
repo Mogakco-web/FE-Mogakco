@@ -2,13 +2,9 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 const api = axios.create({ withCredentials: true });
 
+//재발급과 동시에 이전 막힌 요청용 인스턴스
 const reApi = axios.create({ withCredentials: true });
 
-reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
-  const accessToken: string | null = localStorage.getItem('accessToken');
-  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
-  return requestConfig;
-});
 export const userApis = {
   userInfo: async () => {
     const res = await api.get(`/api/v1/member/userInfo/one`);
@@ -62,15 +58,11 @@ api.interceptors.response.use(
       response: { status },
     } = error;
     try {
-      console.log(status);
       if (status === 401) {
         localStorage.setItem('accessToken', 'expired');
         const originalRequest = config;
-        console.log('오리지날', config);
         //token refresh 요청
-        console.log('토큰 리프레쉬 요청');
         await userApis.tokenRefresh().then((res) => {
-          console.log('토큰 재발급', res);
           const { authorization, authorization_refresh } = res.headers;
           localStorage.setItem('accessToken', authorization!);
           localStorage.setItem('refreshToken', authorization_refresh!);
@@ -91,4 +83,11 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
+  const accessToken: string | null = localStorage.getItem('accessToken');
+  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
+  return requestConfig;
+});
+
 export default api;
