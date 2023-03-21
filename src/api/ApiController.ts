@@ -2,6 +2,13 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 const api = axios.create({ withCredentials: true });
 
+const reApi = axios.create({ withCredentials: true });
+
+reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
+  const accessToken: string | null = localStorage.getItem('accessToken');
+  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
+  return requestConfig;
+});
 export const userApis = {
   userInfo: async () => {
     const res = await api.get(`/api/v1/member/userInfo/one`);
@@ -22,7 +29,6 @@ export const userApis = {
     return res;
   },
 };
-
 api.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   const accessToken: string | null = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -44,6 +50,7 @@ api.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   if (accessToken === 'expired') {
     requestConfig.headers = { Authorization_refresh: `Bearer ${refreshToken}` };
   }
+
   return requestConfig;
 });
 
@@ -62,15 +69,14 @@ api.interceptors.response.use(
         console.log('오리지날', config);
         //token refresh 요청
         console.log('토큰 리프레쉬 요청');
-        userApis.tokenRefresh().then((res) => {
-          console.log(res);
+        await userApis.tokenRefresh().then((res) => {
+          console.log('토큰 재발급', res);
           const { authorization, authorization_refresh } = res.headers;
           localStorage.setItem('accessToken', authorization!);
           localStorage.setItem('refreshToken', authorization_refresh!);
         });
-
         // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
-        return axios({
+        return await reApi({
           ...originalRequest,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
