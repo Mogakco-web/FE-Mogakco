@@ -1,20 +1,20 @@
 import create from 'zustand';
-interface ITime {
+interface Time {
   second: number;
   minute: number;
   hour: number;
 }
-interface IStore {
-  time: ITime;
+interface Store {
+  time: Time;
   setTime: (hour: number, minute: number, second: number) => void;
   setTimeClear: () => void;
 }
-const init: ITime = {
+const init: Time = {
   second: 0,
   minute: 0,
   hour: 0,
 };
-const useStopwatchStore = create<IStore>((set) => ({
+const useStopwatchStore = create<Store>((set) => ({
   time: init,
   setTime: (hour, minute, second) =>
     set((state) => ({ ...state, time: { hour, minute, second } })),

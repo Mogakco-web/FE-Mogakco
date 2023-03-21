@@ -2,11 +2,11 @@ import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
 import { transDate, transYesterDate } from '../../utils/timer';
 
-interface IProps {
+interface Props {
   yestaerDayCompareRecordData: string | undefined;
 }
 
-const TimeRecord = ({ yestaerDayCompareRecordData }: IProps) => {
+const TimeRecord = ({ yestaerDayCompareRecordData }: Props) => {
   const { userInfo } = userStore();
 
   return (
