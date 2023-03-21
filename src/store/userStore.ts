@@ -1,9 +1,15 @@
 import create from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 
+interface IUserInfo {
+  userId: string;
+  userImg: string;
+  userOauthId: string;
+}
+
 interface IStore {
   isLogin: boolean;
-  userInfo: object;
+  userInfo: IUserInfo;
   handleIsLogin: () => void;
   setUserInfo: (userId: string, userImg: string, userOauthId: string) => void;
 }

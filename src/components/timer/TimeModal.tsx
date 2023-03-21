@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-import Time from './Time';
+import Time from './TimeView';
 
 const TimeModal = () => {
   return (
