@@ -6,7 +6,7 @@ interface ITime {
 }
 interface IStore {
   time: ITime;
-  setTime: (second: number, minute: number, hour: number) => void;
+  setTime: (hour: number, minute: number, second: number) => void;
   setTimeClear: () => void;
 }
 const init: ITime = {
@@ -16,8 +16,8 @@ const init: ITime = {
 };
 const useStopwatchStore = create<IStore>((set) => ({
   time: init,
-  setTime: (second, minute, hour) =>
-    set((state) => ({ ...state, time: { second, minute, hour } })),
+  setTime: (hour, minute, second) =>
+    set((state) => ({ ...state, time: { hour, minute, second } })),
   setTimeClear: () => set({ time: init }),
 }));
 
