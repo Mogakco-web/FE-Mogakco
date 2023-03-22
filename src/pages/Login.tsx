@@ -12,11 +12,8 @@ const Login = () => {
     userApis
       .logOut(authToken)
       .then((res) => {
-        console.log(res);
+        console.log('로그아웃 성공', res);
         localStorage.clear();
-        // localStorage.removeItem('authToken');
-        // localStorage.removeItem('accessToken');
-        // localStorage.removeItem('refreshToken');
       })
       .catch((err) => {
         console.log(err);
@@ -30,6 +27,12 @@ const Login = () => {
         <a href={loginUrl}>GitHub 아이디로 로그인</a>
       </Button>
       <Button onClick={Logout}>임시 로그아웃</Button>
+      <Button
+        onClick={async () => {
+          userApis.healthCheck().then((res) => console.log(res));
+        }}>
+        헬스 체크
+      </Button>
     </>
   );
 };
