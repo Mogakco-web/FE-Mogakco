@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
-import { transDate, transYesterDate } from '../../utils/timer';
+import { getCurrentDate, getYesterDate } from '../../utils/timer';
 
 interface Props {
   yestaerDayCompareRecordData: string | undefined;
