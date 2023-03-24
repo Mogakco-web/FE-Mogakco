@@ -39,14 +39,6 @@ const TimerController = () => {
     setStatus('pause');
   };
 
-  const onReset = () => {
-    setStatus('stop');
-    if (playTimeout.current) clearInterval(playTimeout.current);
-    setTimeClear();
-    startTime.current = null;
-    pauseTime.current = null;
-  };
-
   useEffect(() => {
     // play 눌렀을 때의 로직
     if (startTime.current === null) {
@@ -79,7 +71,6 @@ const TimerController = () => {
     status,
     onStart,
     onPause,
-    onReset,
   };
 };
 
