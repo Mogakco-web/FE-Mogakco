@@ -37,10 +37,14 @@ const Timer = () => {
   const { mutate: todayRecordInfoMutate } = useMutation(getTodayRecordInfo, {
     onSuccess: (res) => {
       // 오늘의 타임 기록 가져와서 setTime에 넣는다.
-      const [hours, month, sce] = res.data.recodeTime.split(':').map(Number);
-      setTime(hours, month, sce);
-      // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
-      // localStorage.removeItem('startDate');
+      if (res.data !== '해당날짜 공부 기록없음') {
+        const [hours, month, sce] = res.data.recodeTime?.split(':').map(Number);
+        setTime(hours, month, sce);
+      } else {
+        // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
+        setTime(0, 0, 0);
+        localStorage.removeItem('startDate');
+      }
     },
     // onError: (error) => console.log(error),
   });
@@ -71,7 +75,8 @@ const Timer = () => {
   }, []);
 
   const onPauseClick = () => {
-    // 정지 클릭시
+    // TODO 공부 끝 눌렀는데, 상태 업데이트 관련 (자정 넘어갔을때 0으로 초기화 될 때 편의 고려해야함)
+    // 일시정지 클릭시
     onPause();
     // 정지 클릭시 현재 날짜 데이터 가져와서 시작 날짜와 비교
     const startDate = localStorage.getItem('startDate');
@@ -102,7 +107,6 @@ const Timer = () => {
     onStart();
     // getCurrentDate() 로컬에 시작 데이터 저장
     localStorage.setItem('startDate', getCurrentDate());
-    // 시작 클릭시 실행하는 API... 예정
   };
 
   return (
