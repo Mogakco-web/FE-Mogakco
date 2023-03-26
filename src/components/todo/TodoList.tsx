@@ -5,32 +5,49 @@ import AddTodo from './AddTodo';
 import data from './mockup-data.json';
 import { FiX } from 'react-icons/fi';
 import Category from './Category';
+import api from '../../api/ApiController';
+import { useTodoApi } from '../../context/TodoApiContext';
+import { useQuery } from 'react-query';
+import userStore from '../../store/userStore';
 
-const TodoList = ({ filter }: any) => {
+const TodoList = ({ filter, filterId }: any) => {
   const [list, setList] = useState(data);
+  const { userInfo } = userStore();
+  const { todos } = useTodoApi();
+  //투두 리스트 조회
+  const { data: todolist } = useQuery(['todolist'], async () => {
+    return api
+      .post('/api/v1/category/categoryInfo', {
+        oauthId: userInfo.userOauthId,
+      })
+      .then((res) => res.data.map((item: any) => item.todoList));
+    // .then((res) => console.log(res))
+  });
   const [addOpen, setAddOpen] = useState(false);
-  const handleAdd = (todo: {
-    id: string;
-    title: string;
-    contents: string;
-    category: string;
-  }) => {
-    setList([...list, todo]);
+  //투두 생성
+  const handleAdd = async (todo: any) => {
+    const res = await api.post('/api/v1/todo/create', todo);
+    console.log(res);
   };
+  //투두 수정
   const handleModify = (modified: any) => {
     setList(list.map((t) => (t.id === modified.id ? modified : t)));
   };
+  //투두 삭제
   const handleDelete = (deleted: any) => {
     setList(list.filter((t) => t.id !== deleted.id));
   };
-  const filtered = list.filter((item) => item.category === filter);
+  const filtered = list.filter((item: any) => item.category === filter);
+
+  // const filtered = todolist.filter((item: any) => item.categoryName === filter);
   // console.log(filtered);
-  // console.log(list);
+  // console.log(todolist);
+
   return (
     <Section>
-      <Category filter={filter}></Category>
+      <Category filter={filter} filterId={filterId}></Category>
       <ul>
-        {filtered.map((item) => (
+        {filtered.map((item: any) => (
           <Todo
             key={item.id}
             todo={item}

@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { FiChevronUp, FiMoreHorizontal } from 'react-icons/fi';
+import userStore from '../../store/userStore';
+import { useTodoApi } from '../../context/TodoApiContext';
+import api from '../../api/ApiController';
 
-const Category = ({ filter }: any) => {
+const Category = ({ filter, filterId }: any) => {
   const [view, setView] = useState(false);
+  const { todos } = useTodoApi();
+  const { userInfo } = userStore();
+  const body = {
+    oauthId: userInfo.userOauthId,
+  };
   //category 수정
   const [text, setText] = useState(filter);
   //더보기 클릭 체크
@@ -16,7 +24,13 @@ const Category = ({ filter }: any) => {
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
-  const handleDelete = (e: any) => {};
+  const handleDelete = async (e: any) => {
+    api
+      .delete('/api/v1/category', {
+        data: { ...body, categorySeq: filterId },
+      })
+      .then((res) => console.log(res));
+  };
 
   if (filter === 'Todo')
     return (

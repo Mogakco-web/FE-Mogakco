@@ -3,18 +3,42 @@ import TodoList from '../components/todo/TodoList';
 import tw from 'tailwind-styled-components';
 import AddCategory from '../components/todo/AddCategory';
 import { FiX } from 'react-icons/fi';
+import userStore from '../store/userStore';
+import { useQuery, useQueryClient } from 'react-query';
+import { useTodoApi } from '../context/TodoApiContext';
 
 const TodoPage = () => {
-  const [category, setCategory] = useState(['Todo', 'Doing', 'Done']);
+  const { userInfo } = userStore();
   const [addOpen, setAddOpen] = useState(false);
-  const handleAdd = (text: string) => {
-    setCategory([...category, text]);
+  const queryClient = useQueryClient();
+  const { todos } = useTodoApi();
+  //카테고리 목록 불러오기
+  const { isLoading, data: categoryList } = useQuery(['categoryList'], () => {
+    const body = {
+      oauthId: userInfo.userOauthId,
+    };
+    return todos.getCategory(body);
+  });
+  // console.log(categoryList);
+  //새 카테고리 추가
+  const handleAdd = async (text: string) => {
+    await todos.createCategory({
+      oauthId: userInfo.userOauthId,
+      category_name: text,
+    });
+    await queryClient.invalidateQueries(['categoryList']);
   };
   return (
     <Container>
-      {category.map((item, index) => (
-        <TodoList key={index} filter={item} />
-      ))}
+      {isLoading && <p>로딩 중!</p>}
+      {categoryList &&
+        categoryList.map((item: any, index: number) => (
+          <TodoList
+            key={index}
+            filter={item.categoryName}
+            filterId={item.categorySeq}
+          />
+        ))}
       {!addOpen ? (
         <AddBox onClick={() => setAddOpen((prev) => !prev)}>
           + Add another Category

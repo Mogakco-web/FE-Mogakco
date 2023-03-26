@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
+import userStore from '../../store/userStore';
 
-//임시 임의의 id값 위해서
-let random = 9;
 const AddTodo = ({ onAdd, category }: any) => {
   const [text, setText] = useState('');
-  console.log(category);
+  const { userInfo } = userStore();
 
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    //임시 임의의 id값 위해서
-    random++;
     if (text.trim().length === 0) return;
-    onAdd({ id: random, title: text, contents: '', category });
+    onAdd({
+      oauthId: userInfo.userOauthId,
+      todoTitle: text,
+      categoryName: category,
+    });
     setText('');
   };
   return (
