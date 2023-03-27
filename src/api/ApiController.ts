@@ -1,3 +1,4 @@
+import { userApis } from './user';
 import axios, { AxiosRequestConfig } from 'axios';
 
 //제너럴한 api 요청 인스턴스
@@ -70,27 +71,5 @@ reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
   return requestConfig;
 });
-
-//유저용 api 함수
-export const userApis = {
-  userInfo: async () => {
-    const res = await onceApi.get(`/api/v1/member/userInfo/one`);
-    return res;
-  },
-  logOut: async (data: string | null) => {
-    const res = await api.delete(
-      `/api/v1/eliminate/authToken?authToken=${data}`,
-    );
-    return res;
-  },
-  tokenRefresh: async () => {
-    const res = await api.get('/api/v1/member/userInfo/access');
-    return res;
-  },
-  healthCheck: async () => {
-    const res = await api.post('/api/v1/healthcheck');
-    return res;
-  },
-};
 
 export default api;

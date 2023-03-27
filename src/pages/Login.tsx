@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
+import { userApis } from '../api/user';
 import userStore from '../store/userStore';
-import { userApis } from '../api/ApiController';
 
 const loginUrl: string = `http://3.38.8.89:8080/oauth2/authorization/github`;
 

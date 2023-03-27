@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userApis } from '../api/ApiController';
+import { userApis } from '../api/user';
 import userStore from '../store/userStore';
 const CallBack = () => {
   const { handleIsLogin, setUserInfo } = userStore();
