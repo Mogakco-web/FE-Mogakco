@@ -12,14 +12,12 @@ const TodoPage = () => {
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
-  //카테고리 목록 불러오기
+  //카테고리 리스트 불러오기
   const { isLoading, data: categoryList } = useQuery(['categoryList'], () => {
-    const body = {
+    return todos.getCategory({
       oauthId: userInfo.userOauthId,
-    };
-    return todos.getCategory(body);
+    });
   });
-  // console.log(categoryList);
   //새 카테고리 추가
   const handleAdd = async (text: string) => {
     await todos.createCategory({

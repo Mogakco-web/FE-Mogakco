@@ -11,6 +11,7 @@ export interface TodolistBody {
 
 export default class TodolistApi {
   constructor() {}
+
   //카테고리 조회
   async getCategory(body: TodolistBody) {
     return api
@@ -19,19 +20,22 @@ export default class TodolistApi {
         res.data.map(({ memberSeq, todoList, ...item }: any) => item),
       );
   }
+  //카테고리 생성
   async createCategory(body: TodolistBody) {
     return api
       .post('/api/v1/category/categoryCreate', { ...body })
       .then((res) => console.log(res));
   }
+  //카테고리 수정
   async modifyCategory(body: TodolistBody) {
     return api
-      .put('/api/v1/category/category', { ...body })
+      .put('/api/v1/category', { ...body })
       .then((res) => console.log(res));
   }
+  //카테고리 삭제
   async deleteCategory(body: TodolistBody) {
     return api
-      .delete('/api/v1/category/category', { data: { ...body } })
+      .delete('/api/v1/category', { data: { ...body } })
       .then((res) => console.log(res));
   }
   async getTodolist(body: TodolistBody) {
