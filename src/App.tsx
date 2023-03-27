@@ -8,10 +8,12 @@ import Main from './pages/Main';
 import Ranking from './pages/Ranking';
 import Timer from './pages/Timer';
 import TodoPage from './pages/TodoPage';
+import TimerController from './components/timer/TimerController';
 
 function App() {
   const location = useLocation();
   const hiddenPaths: string[] = ['/', '/timer', '/login'];
+  const TimerControll = TimerController();
 
   return (
     <>
@@ -23,7 +25,9 @@ function App() {
           <Route path='/callback' element={<CallBack />}></Route>
           <Route path='/todo' element={<TodoPage />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
-          <Route path='/timer' element={<Timer />}></Route>
+          <Route
+            path='/timer'
+            element={<Timer props={TimerControll} />}></Route>
         </Route>
       </Routes>
       {!hiddenPaths.includes(location.pathname) && <TimeModal />}

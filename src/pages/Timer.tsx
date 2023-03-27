@@ -10,28 +10,28 @@ import Time from '../components/timer/TimeView';
 import TimeRecord from '../components/timer/TimeRecord';
 import useTimerStore from '../store/timer';
 import userStore from '../store/userStore';
-import { getCurrentDate, transHMC, getYesterDate } from '../utils/timer';
-import TimerController from '../components/timer/TimerController';
+import {
+  getCurrentDate,
+  transHMC,
+  getYesterDate,
+  ContinuousMode,
+} from '../utils/timer';
+import useRecord from '../hooks/timer/useRecord';
 
 interface TimerControllerInterface {
-  status: string;
-  onStart: () => void;
-  onPause: () => void;
+  props: {
+    status: string;
+    onStart: () => void;
+    onPause: () => void;
+  };
 }
 
-const Timer = () => {
-  const { status, onStart, onPause }: TimerControllerInterface =
-    TimerController();
+const Timer = (TimerControll: TimerControllerInterface) => {
+  const { status, onStart, onPause } = TimerControll.props;
   const { userInfo } = userStore();
   const { time, setTime } = useTimerStore();
-
   // 타임 정지시 기록하기
-  const { mutate: recordMutate } = useMutation(getRecord, {
-    onSuccess: (res) => {
-      // console.log(res);
-    },
-    onError: (error) => alert('오류 발생.'),
-  });
+  const { mutate: recordMutate } = useRecord();
 
   // 오늘의 타임 기록 가져오기
   const { mutate: todayRecordInfoMutate } = useMutation(getTodayRecordInfo, {
@@ -40,6 +40,7 @@ const Timer = () => {
       if (res.data !== '해당날짜 공부 기록없음') {
         const [hours, month, sce] = res.data.recodeTime?.split(':').map(Number);
         setTime(hours, month, sce);
+        console.log('불러오기', hours, month, sce);
       } else {
         // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
         setTime(0, 0, 0);
@@ -79,20 +80,7 @@ const Timer = () => {
     // 일시정지 클릭시
     onPause();
     // 정지 클릭시 현재 날짜 데이터 가져와서 시작 날짜와 비교
-    const startDate = localStorage.getItem('startDate');
-    const cureentDate = getCurrentDate();
-    let sendDate = getCurrentDate();
-    if (startDate) {
-      // 타이머 시작을 전날에 한 경우 (자정이 넘어서도 지속된 타이머)
-      if (startDate < cureentDate) {
-        sendDate = startDate;
-        // 자정이 넘었으니 startDate를 서버로 전송 후 로컬에서 삭제
-        localStorage.removeItem('startDate');
-      } else {
-        // 자정이 넘지 않았으니 getCurrentDate()를 서버로 전송하면 된다.
-        sendDate = cureentDate;
-      }
-    }
+    const sendDate = ContinuousMode();
     const [hours, minute, second] = transHMC(time);
     recordMutate({
       hours,
