@@ -1,5 +1,18 @@
+import axios, { AxiosRequestConfig } from 'axios';
 import api from './ApiController';
-import onceApi from './ApiController';
+
+//첫 로그인 시 authToken 발급용 인스턴스
+const onceApi = axios.create({ withCredentials: true });
+
+//로그인 시 유저정보 get용 헤더
+onceApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
+  const accessToken: string | null = localStorage.getItem('accessToken');
+  requestConfig.headers = {
+    Authorization: `Bearer ${accessToken}`,
+    userInfo: `${accessToken} `,
+  };
+  return requestConfig;
+});
 
 export const userApis = {
   //최초 유저 정보 조회(authToken get)

@@ -1,12 +1,17 @@
 import { userApis } from './user';
 import axios, { AxiosRequestConfig } from 'axios';
 
-//제너럴한 api 요청 인스턴스
-const api = axios.create({ withCredentials: true });
-//첫 로그인 시 authToken 발급용 인스턴스
-const onceApi = axios.create({ withCredentials: true });
 //401 토큰 재발급과 동시에 재요청용 인스턴스
 const reApi = axios.create({ withCredentials: true });
+//401 토큰 재발급과 동시에 재요청용 헤더
+reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
+  const accessToken: string | null = localStorage.getItem('accessToken');
+  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
+  return requestConfig;
+});
+
+//제너럴한 api 요청 인스턴스
+const api = axios.create({ withCredentials: true });
 
 api.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   const accessToken: string | null = localStorage.getItem('accessToken');
@@ -54,22 +59,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-//로그인 시 유저정보 get용 헤더
-onceApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
-  const accessToken: string | null = localStorage.getItem('accessToken');
-  requestConfig.headers = {
-    Authorization: `Bearer ${accessToken}`,
-    userInfo: `${accessToken} `,
-  };
-  return requestConfig;
-});
-
-//401 토큰 재발급과 동시에 재요청용 헤더
-reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
-  const accessToken: string | null = localStorage.getItem('accessToken');
-  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
-  return requestConfig;
-});
 
 export default api;
