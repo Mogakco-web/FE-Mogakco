@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import tw from 'tailwind-styled-components';
-import {
-  getRecord,
-  getTodayRecordInfo,
-  getYesterDayCompareRecord,
-} from '../api/timer';
+import { getTodayRecordInfo, getYesterDayCompareRecord } from '../api/timer';
 import Time from '../components/timer/TimeView';
 import TimeRecord from '../components/timer/TimeRecord';
 import useTimerStore from '../store/timer';
@@ -32,7 +28,7 @@ const Timer = (TimerControll: TimerControllerInterface) => {
   const { time, setTime } = useTimerStore();
   // 타임 정지시 기록하기
   const { mutate: recordMutate } = useRecord();
-
+  console.log(time);
   // 오늘의 타임 기록 가져오기
   const { mutate: todayRecordInfoMutate } = useMutation(getTodayRecordInfo, {
     onSuccess: (res) => {
@@ -40,7 +36,6 @@ const Timer = (TimerControll: TimerControllerInterface) => {
       if (res.data !== '해당날짜 공부 기록없음') {
         const [hours, month, sce] = res.data.recodeTime?.split(':').map(Number);
         setTime(hours, month, sce);
-        console.log('불러오기', hours, month, sce);
       } else {
         // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
         setTime(0, 0, 0);
@@ -93,7 +88,6 @@ const Timer = (TimerControll: TimerControllerInterface) => {
 
   const onStartClick = () => {
     onStart();
-    // getCurrentDate() 로컬에 시작 데이터 저장
     localStorage.setItem('startDate', getCurrentDate());
   };
 
@@ -105,13 +99,10 @@ const Timer = (TimerControll: TimerControllerInterface) => {
         </TimeWrap>
         <BtnWrap>
           {status === 'play' ? (
-            <TimeBtn className='mr-[30px]' onClick={() => onPause()}>
-              일시정지
-            </TimeBtn>
+            <TimeBtn onClick={() => onPauseClick()}>정지</TimeBtn>
           ) : (
             <TimeBtn onClick={() => onStartClick()}>시작</TimeBtn>
           )}
-          <TimeBtn onClick={() => onPauseClick()}>공부 끝</TimeBtn>
         </BtnWrap>
       </StopwatchWrap>
       <TimeRecord
@@ -148,7 +139,6 @@ const BtnWrap = tw.div`
 text-3xl
 mt-20
 p-2
-w-[250px]
 flex
 justify-between
 `;

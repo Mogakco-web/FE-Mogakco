@@ -1,10 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { useMutation } from 'react-query';
-import { getRecord } from '../../api/timer';
 import useRecord from '../../hooks/timer/useRecord';
 import useTimerStore from '../../store/timer';
 import userStore from '../../store/userStore';
-import { ContinuousMode, getCurrentDate, transHMC } from '../../utils/timer';
+import { ContinuousMode, transHMC } from '../../utils/timer';
 
 const TimerController = () => {
   const { time, setTime, setTimeClear } = useTimerStore();
