@@ -3,29 +3,37 @@ import { FiEdit3 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 import tw from 'tailwind-styled-components';
+import userStore from '../../store/userStore';
 
 const Todo = ({ todo, onModify, onDelete }: any) => {
-  const { title } = todo;
+  const { todoTitle, todoSeq } = todo;
+  const { userInfo } = userStore();
   //todo title 수정
-  const [text, setText] = useState(title);
+  const [text, setText] = useState(todoTitle);
   const [isChecked, setIsChecked] = useState(false);
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
+  //todo 수정
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (text.trim().length === 0) return;
-    onModify({ ...todo, title: text });
+    onModify({
+      todoSeq: todoSeq,
+      oauthId: userInfo.userOauthId,
+      changeTitle: text,
+    });
     setIsChecked(false);
   };
   //todo 삭제
-  const handleDelete = (e: any) => onDelete(todo);
+  const handleDelete = (e: any) =>
+    onDelete({ todoSeq: todoSeq, oauthId: userInfo.userOauthId });
 
   return (
     <>
       {!isChecked ? (
         <Title>
-          {title}
+          {todoTitle}
           <Icon>
             <button
               onClick={() => {
@@ -42,7 +50,7 @@ const Todo = ({ todo, onModify, onDelete }: any) => {
         <Form onSubmit={handleSubmit}>
           <Input
             type='text'
-            placeholder={title}
+            placeholder={todoTitle}
             value={text}
             onChange={handleChange}
           />

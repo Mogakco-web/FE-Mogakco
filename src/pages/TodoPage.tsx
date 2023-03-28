@@ -25,6 +25,7 @@ const TodoPage = () => {
       category_name: text,
     });
     await queryClient.invalidateQueries(['categoryList']);
+    setAddOpen((prev) => !prev);
   };
   return (
     <Container>

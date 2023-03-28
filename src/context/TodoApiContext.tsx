@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import TodolistApi from '../api/todolistApi';
+import TodolistApi from '../api/todolist';
 
 export const TodoApiContext = createContext<any | undefined>(undefined);
 

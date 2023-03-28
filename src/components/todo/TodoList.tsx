@@ -2,61 +2,51 @@ import React, { useState } from 'react';
 import Todo from './Todo';
 import tw from 'tailwind-styled-components';
 import AddTodo from './AddTodo';
-import data from './mockup-data.json';
 import { FiX } from 'react-icons/fi';
 import Category from './Category';
-import api from '../../api/ApiController';
 import { useTodoApi } from '../../context/TodoApiContext';
-import { useQuery } from 'react-query';
-import userStore from '../../store/userStore';
+import { useQuery, useQueryClient } from 'react-query';
 
 const TodoList = ({ filter, filterId }: any) => {
-  const [list, setList] = useState(data);
-  const { userInfo } = userStore();
+  const [addOpen, setAddOpen] = useState(false);
+  const queryClient = useQueryClient();
   const { todos } = useTodoApi();
   //투두 리스트 조회
-  const { data: todolist } = useQuery(['todolist'], async () => {
-    return api
-      .post('/api/v1/category/categoryInfo', {
-        oauthId: userInfo.userOauthId,
-      })
-      .then((res) => res.data.map((item: any) => item.todoList));
-    // .then((res) => console.log(res))
-  });
-  const [addOpen, setAddOpen] = useState(false);
+  const { isLoading, data: todolist } = useQuery(['todolist', filterId], () =>
+    todos.getTodolist(filterId),
+  );
   //투두 생성
   const handleAdd = async (todo: any) => {
-    const res = await api.post('/api/v1/todo/create', todo);
-    console.log(res);
+    await todos.createTodo(todo);
+    await queryClient.invalidateQueries(['todolist']);
+    setAddOpen((prev) => !prev);
   };
   //투두 수정
-  const handleModify = (modified: any) => {
-    setList(list.map((t) => (t.id === modified.id ? modified : t)));
+  const handleModify = async (modified: any) => {
+    await todos.modifyTodo(modified);
+    await queryClient.invalidateQueries(['todolist']);
   };
   //투두 삭제
-  const handleDelete = (deleted: any) => {
-    setList(list.filter((t) => t.id !== deleted.id));
+  const handleDelete = async (deleted: any) => {
+    await todos.deleteTodo(deleted);
+    await queryClient.invalidateQueries(['todolist']);
   };
-  const filtered = list.filter((item: any) => item.category === filter);
-
-  // const filtered = todolist.filter((item: any) => item.categoryName === filter);
-  // console.log(filtered);
-  // console.log(todolist);
 
   return (
     <Section>
       <Category filter={filter} filterId={filterId}></Category>
-      <ul>
-        {filtered.map((item: any) => (
-          <Todo
-            key={item.id}
-            todo={item}
-            onModify={handleModify}
-            onDelete={handleDelete}
-          />
+      {isLoading && <p>로딩중...</p>}
+      {todolist &&
+        todolist.map((item: any) => (
+          <ul>
+            <Todo
+              key={item.todoSeq}
+              todo={item}
+              onModify={handleModify}
+              onDelete={handleDelete}
+            />
+          </ul>
         ))}
-      </ul>
-
       {addOpen ? (
         <AddCard>
           <XButton
