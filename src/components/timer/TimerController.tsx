@@ -13,6 +13,7 @@ const TimerController = () => {
   const { userInfo } = userStore();
   const { mutate: recordMutate } = useRecord();
   const { hour, minute, second } = time;
+
   // 밀리초로 변환
   const totalMilliseconds = ((hour * 60 + minute) * 60 + second) * 1000;
 
@@ -90,7 +91,6 @@ const TimerController = () => {
       timerCreDay: sendDate,
       oauthId: userInfo.userOauthId,
     });
-    onStart();
   };
 
   return {

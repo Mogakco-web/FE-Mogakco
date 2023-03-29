@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import tw from 'tailwind-styled-components';
-import { getTodayRecordInfo, getYesterDayCompareRecord } from '../api/timer';
+import { timerApis } from '../api/timer';
 import Time from '../components/timer/TimeView';
 import TimeRecord from '../components/timer/TimeRecord';
 import useTimerStore from '../store/timer';
@@ -28,28 +28,33 @@ const Timer = (TimerControll: TimerControllerInterface) => {
   const { time, setTime } = useTimerStore();
   // 타임 정지시 기록하기
   const { mutate: recordMutate } = useRecord();
-  console.log(time);
+
   // 오늘의 타임 기록 가져오기
-  const { mutate: todayRecordInfoMutate } = useMutation(getTodayRecordInfo, {
-    onSuccess: (res) => {
-      // 오늘의 타임 기록 가져와서 setTime에 넣는다.
-      if (res.data !== '해당날짜 공부 기록없음') {
-        const [hours, month, sce] = res.data.recodeTime?.split(':').map(Number);
-        setTime(hours, month, sce);
-      } else {
-        // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
-        setTime(0, 0, 0);
-        localStorage.removeItem('startDate');
-      }
+  const { mutate: todayRecordInfoMutate } = useMutation(
+    timerApis.getTodayRecordInfo,
+    {
+      onSuccess: (res) => {
+        // 오늘의 타임 기록 가져와서 setTime에 넣는다.
+        if (res.data !== '해당날짜 공부 기록없음') {
+          const [hours, month, sce] = res.data.recodeTime
+            ?.split(':')
+            .map(Number);
+          setTime(hours, month, sce);
+        } else {
+          // 오늘 타임 기록이 초기화된 0초면 기록된 시작 날짜 삭제
+          setTime(0, 0, 0);
+          localStorage.removeItem('startDate');
+        }
+      },
+      // onError: (error) => console.log(error),
     },
-    // onError: (error) => console.log(error),
-  });
+  );
 
   // 어제 타임 기록과 비교 데이터 가져오기
   const {
     data: yestaerDayCompareRecordData,
     mutate: yestaerDayCompareRecordMutate,
-  } = useMutation(getYesterDayCompareRecord, {
+  } = useMutation(timerApis.getYesterDayCompareRecord, {
     onSuccess: (res) => {
       console.log(res);
     },
@@ -57,17 +62,19 @@ const Timer = (TimerControll: TimerControllerInterface) => {
   });
 
   useEffect(() => {
-    // 오픈시 오늘 타임 기록 가져오기
-    todayRecordInfoMutate({
-      oauthId: userInfo.userOauthId,
-      timerCreDay: getCurrentDate(),
-    });
-    // 어제 타임 기록과 비교 데이터 가져오기
-    yestaerDayCompareRecordMutate({
-      oauthId: userInfo.userOauthId,
-      todayDateInfo: getCurrentDate(),
-      yesterdayDateInfo: getYesterDate(),
-    });
+    if (status !== 'play') {
+      // 오픈시 오늘 타임 기록 가져오기
+      todayRecordInfoMutate({
+        oauthId: userInfo.userOauthId,
+        timerCreDay: getCurrentDate(),
+      });
+      // 어제 타임 기록과 비교 데이터 가져오기
+      yestaerDayCompareRecordMutate({
+        oauthId: userInfo.userOauthId,
+        todayDateInfo: getCurrentDate(),
+        yesterdayDateInfo: getYesterDate(),
+      });
+    }
   }, []);
 
   const onPauseClick = () => {

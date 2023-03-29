@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from 'react-query';
-import { getRecord } from '../../api/timer';
+import { timerApis } from '../../api/timer';
 function useRecord() {
   // 타임 정지시 기록하기
-  const { mutate } = useMutation(getRecord, {
+  const { mutate } = useMutation(timerApis.getRecord, {
     onSuccess: (res) => {
       // console.log(res);
     },
