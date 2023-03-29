@@ -26,4 +26,9 @@ export const timerApis = {
     const res = await api.post('/api/v1/timer/compareYes', { ...body });
     return res;
   },
+  // 일주일 치 기록 가져오기
+  getWeekCompareRecord: async (body: RecordBody) => {
+    const res = await api.post('/api/v1/timer/compareWeek', { ...body });
+    return res;
+  },
 };

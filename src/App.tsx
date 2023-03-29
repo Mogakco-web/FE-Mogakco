@@ -14,7 +14,6 @@ function App() {
   const location = useLocation();
   const hiddenPaths: string[] = ['/', '/timer', '/login'];
   const TimerControll = TimerController();
-
   return (
     <>
       <Routes>

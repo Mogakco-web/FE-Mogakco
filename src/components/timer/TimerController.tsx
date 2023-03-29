@@ -5,7 +5,7 @@ import userStore from '../../store/userStore';
 import { ContinuousMode, transHMC } from '../../utils/timer';
 
 const TimerController = () => {
-  const { time, setTime, setTimeClear } = useTimerStore();
+  const { time, setTime } = useTimerStore();
   const playTimeout = useRef<NodeJS.Timeout | null>(null);
   const startTime = useRef<number | null>(null);
   const pauseTime = useRef<number | null>(null);
@@ -35,6 +35,7 @@ const TimerController = () => {
         startTime.current += Date.now() - pauseTime.current;
     }
     setStatus('play');
+    localStorage.setItem('playTime', 'play');
   };
 
   const onPause = () => {
@@ -43,6 +44,7 @@ const TimerController = () => {
       pauseTime.current = Date.now();
     }
     setStatus('pause');
+    localStorage.removeItem('playTime');
   };
 
   useEffect(() => {
@@ -77,20 +79,24 @@ const TimerController = () => {
 
   // 페이지를 나갈 때 타이머 데이터 저장 함수
   const handleBeforeUnload = (event: any) => {
-    event.preventDefault();
-    event.returnValue = '';
-    // 일시정지 클릭시
-    onPause();
-    // 정지 클릭시 현재 날짜 데이터 가져와서 시작 날짜와 비교
-    const sendDate = ContinuousMode();
-    const [hours, minute, second] = transHMC(time);
-    recordMutate({
-      hours,
-      minute,
-      second,
-      timerCreDay: sendDate,
-      oauthId: userInfo.userOauthId,
-    });
+    const playStatus = localStorage.getItem('playTime');
+    if (playStatus === 'play') {
+      event.preventDefault();
+      event.returnValue = '';
+      // 일시정지 클릭시
+      onPause();
+      // 정지 클릭시 현재 날짜 데이터 가져와서 시작 날짜와 비교
+      const sendDate = ContinuousMode();
+      const [hours, minute, second] = transHMC(time);
+      recordMutate({
+        hours,
+        minute,
+        second,
+        timerCreDay: sendDate,
+        oauthId: userInfo.userOauthId,
+      });
+      localStorage.removeItem('playTime');
+    }
   };
 
   return {

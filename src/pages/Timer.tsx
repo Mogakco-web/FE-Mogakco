@@ -54,9 +54,22 @@ const Timer = (TimerControll: TimerControllerInterface) => {
   const {
     data: yestaerDayCompareRecordData,
     mutate: yestaerDayCompareRecordMutate,
+    isLoading: yesterLoading,
   } = useMutation(timerApis.getYesterDayCompareRecord, {
     onSuccess: (res) => {
-      console.log(res);
+      // console.log(res);
+    },
+    // onError: (error) => alert('오류 발생.'),
+  });
+
+  // 일주일치 기록 데이터 가져오기
+  const {
+    data: weekCompareRecordData,
+    mutate: weekCompareRecordMutate,
+    isLoading: weekLoading,
+  } = useMutation(timerApis.getWeekCompareRecord, {
+    onSuccess: (res) => {
+      // console.log(res);
     },
     // onError: (error) => alert('오류 발생.'),
   });
@@ -73,6 +86,10 @@ const Timer = (TimerControll: TimerControllerInterface) => {
         oauthId: userInfo.userOauthId,
         todayDateInfo: getCurrentDate(),
         yesterdayDateInfo: getYesterDate(),
+      });
+      // 일주일치 기록 데이터 가져오기
+      weekCompareRecordMutate({
+        oauthId: userInfo.userOauthId,
       });
     }
   }, []);
@@ -112,9 +129,12 @@ const Timer = (TimerControll: TimerControllerInterface) => {
           )}
         </BtnWrap>
       </StopwatchWrap>
-      <TimeRecord
-        yestaerDayCompareRecordData={yestaerDayCompareRecordData?.data}
-      />
+      {
+        <TimeRecord
+          weekCompareRecordData={weekCompareRecordData?.data}
+          yestaerDayCompareRecordData={yestaerDayCompareRecordData?.data}
+        />
+      }
     </Wrapper>
   );
 };
