@@ -1,7 +1,27 @@
-import React from 'react';
+import { useQuery } from 'react-query';
+import { rankApis } from '../api/rank';
+import RankListView from '../components/rank/RankListView';
 
 const Ranking = () => {
-  return <div>랭킹페이지다.</div>;
+  const {
+    data: RankingData,
+    refetch,
+    isLoading,
+  } = useQuery(['rank'], rankApis.getRank, {
+    select: (res) => res.data,
+    onSuccess: (res) => {
+      // console.log(res);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  return (
+    <div>
+      <RankListView rankingData={RankingData}></RankListView>
+    </div>
+  );
 };
 
 export default Ranking;
