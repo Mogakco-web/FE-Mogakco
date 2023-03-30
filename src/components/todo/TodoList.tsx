@@ -6,8 +6,10 @@ import { FiX } from 'react-icons/fi';
 import Category from './Category';
 import { useTodoApi } from '../../context/TodoApiContext';
 import { useQuery, useQueryClient } from 'react-query';
+import modalStore from '../../store/modalStore';
 
 const TodoList = ({ filter, filterId }: any) => {
+  const { modalOpen, setModalOpen } = modalStore();
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
@@ -39,12 +41,14 @@ const TodoList = ({ filter, filterId }: any) => {
       {todolist &&
         todolist.map((item: any) => (
           <ul>
-            <Todo
-              key={item.todoSeq}
-              todo={item}
-              onModify={handleModify}
-              onDelete={handleDelete}
-            />
+            <div onClick={() => setModalOpen()}>
+              <Todo
+                key={item.todoSeq}
+                todo={item}
+                onModify={handleModify}
+                onDelete={handleDelete}
+              />
+            </div>
           </ul>
         ))}
       {addOpen ? (

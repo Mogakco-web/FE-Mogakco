@@ -1,20 +1,20 @@
 import create from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 
-interface IUserInfo {
+interface UserInfo {
   userId: string;
   userImg: string;
   userOauthId: string;
 }
 
-interface IStore {
+interface Store {
   isLogin: boolean;
-  userInfo: IUserInfo;
+  userInfo: UserInfo;
   handleIsLogin: () => void;
   setUserInfo: (userId: string, userImg: string, userOauthId: string) => void;
 }
 
-const userStore = create<IStore>()(
+const userStore = create<Store>()(
   devtools(
     persist(
       (set) => ({
