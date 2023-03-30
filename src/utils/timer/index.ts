@@ -53,3 +53,21 @@ export const dateFormat = () => {
 
   return `${year}年 ${month}月 ${day}日`;
 };
+
+export const ContinuousMode = () => {
+  const startDate = localStorage.getItem('startDate');
+  const cureentDate = getCurrentDate();
+  let sendDate = getCurrentDate();
+  if (startDate) {
+    // 타이머 시작을 전날에 한 경우 (자정이 넘어서도 지속된 타이머)
+    if (startDate < cureentDate) {
+      sendDate = startDate;
+      // 자정이 넘었으니 startDate를 서버로 전송 후 로컬에서 삭제
+      localStorage.removeItem('startDate');
+    } else {
+      // 자정이 넘지 않았으니 getCurrentDate()를 서버로 전송하면 된다.
+      sendDate = cureentDate;
+    }
+  }
+  return sendDate;
+};
