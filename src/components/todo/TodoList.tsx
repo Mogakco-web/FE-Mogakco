@@ -41,16 +41,12 @@ const TodoList = ({ filter, filterId }: any) => {
       {todolist &&
         todolist.map((item: any) => (
           <ul>
-            <Link
-              to={String(item.todoSeq)}
-              state={{ background: location, data: item }}>
-              <Todo
-                key={item.todoSeq}
-                todo={item}
-                onModify={handleModify}
-                onDelete={handleDelete}
-              />
-            </Link>
+            <Todo
+              key={item.todoSeq}
+              todo={item}
+              onModify={handleModify}
+              onDelete={handleDelete}
+            />
           </ul>
         ))}
       {addOpen ? (

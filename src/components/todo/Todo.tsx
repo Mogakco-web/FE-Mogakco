@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiEdit3 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import { Link, useLocation } from 'react-router-dom';
 
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
@@ -8,6 +9,7 @@ import userStore from '../../store/userStore';
 const Todo = ({ todo, onModify, onDelete }: any) => {
   const { todoTitle, todoSeq } = todo;
   const { userInfo } = userStore();
+  const location = useLocation();
   //todo title 수정
   const [text, setText] = useState(todoTitle);
   const [isChecked, setIsChecked] = useState(false);
@@ -33,7 +35,12 @@ const Todo = ({ todo, onModify, onDelete }: any) => {
     <>
       {!isChecked ? (
         <Title>
-          {todoTitle}
+          <Link
+            className='w-full'
+            to={String(todoSeq)}
+            state={{ background: location, data: todo }}>
+            {todoTitle}
+          </Link>
           <Icon>
             <button
               onClick={() => {

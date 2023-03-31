@@ -35,7 +35,7 @@ export default class TodolistApi {
   //투두 리스트 조회 (카테고리별)
   async getTodolist(id: number) {
     return api
-      .get('/api/v1/todo', {
+      .get('/api/v1/todo/listInfo', {
         params: { categorySeq: id },
       })
       .then((res) => res.data);
