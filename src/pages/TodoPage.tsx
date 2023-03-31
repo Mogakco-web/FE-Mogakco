@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TodoList from '../components/todo/TodoList';
 import tw from 'tailwind-styled-components';
 import AddCategory from '../components/todo/AddCategory';
@@ -6,12 +6,9 @@ import { FiX } from 'react-icons/fi';
 import userStore from '../store/userStore';
 import { useQuery, useQueryClient } from 'react-query';
 import { useTodoApi } from '../context/TodoApiContext';
-import TodoDetail from '../components/todo/TodoDetail';
-import modalStore from '../store/modalStore';
 
 const TodoPage = () => {
   const { userInfo } = userStore();
-  const { modalOpen, setModalOpen } = modalStore();
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
@@ -30,19 +27,17 @@ const TodoPage = () => {
     await queryClient.invalidateQueries(['categoryList']);
     setAddOpen((prev) => !prev);
   };
-  useEffect(() => {}, [modalOpen]);
   return (
     <Container>
       {isLoading && <p>로딩 중!</p>}
       {categoryList &&
-        categoryList.map((item: any, index: number) => (
+        categoryList.map((item: any) => (
           <TodoList
-            key={index}
+            key={item.categorySeq}
             filter={item.categoryName}
             filterId={item.categorySeq}
           />
         ))}
-      {modalOpen && <TodoDetail />}
       {!addOpen ? (
         <AddBox onClick={() => setAddOpen((prev) => !prev)}>
           + Add another Category

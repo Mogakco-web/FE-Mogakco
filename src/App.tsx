@@ -8,14 +8,22 @@ import Main from './pages/Main';
 import Ranking from './pages/Ranking';
 import Timer from './pages/Timer';
 import TodoPage from './pages/TodoPage';
+import TodoDetail from './components/todo/TodoDetail';
 
 function App() {
   const location = useLocation();
+  const background = location.state && location.state.background;
+
   const hiddenPaths: string[] = ['/', '/timer', '/login'];
 
   return (
     <>
-      <Routes>
+      {background && (
+        <Routes>
+          <Route path='/todo/:todoId' element={<TodoDetail />} />
+        </Routes>
+      )}
+      <Routes location={background || location}>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
@@ -26,6 +34,7 @@ function App() {
           <Route path='/timer' element={<Timer />}></Route>
         </Route>
       </Routes>
+
       {!hiddenPaths.includes(location.pathname) && <TimeModal />}
     </>
   );

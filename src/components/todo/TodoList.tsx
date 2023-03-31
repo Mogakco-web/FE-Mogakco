@@ -6,10 +6,10 @@ import { FiX } from 'react-icons/fi';
 import Category from './Category';
 import { useTodoApi } from '../../context/TodoApiContext';
 import { useQuery, useQueryClient } from 'react-query';
-import modalStore from '../../store/modalStore';
+import { Link, useLocation } from 'react-router-dom';
 
 const TodoList = ({ filter, filterId }: any) => {
-  const { modalOpen, setModalOpen } = modalStore();
+  const location = useLocation();
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
@@ -33,7 +33,7 @@ const TodoList = ({ filter, filterId }: any) => {
     await todos.deleteTodo(deleted);
     await queryClient.invalidateQueries(['todolist']);
   };
-
+  // console.log(todolist);
   return (
     <Section>
       <Category filter={filter} filterId={filterId}></Category>
@@ -41,14 +41,16 @@ const TodoList = ({ filter, filterId }: any) => {
       {todolist &&
         todolist.map((item: any) => (
           <ul>
-            <div onClick={() => setModalOpen()}>
+            <Link
+              to={String(item.todoSeq)}
+              state={{ background: location, data: item }}>
               <Todo
                 key={item.todoSeq}
                 todo={item}
                 onModify={handleModify}
                 onDelete={handleDelete}
               />
-            </div>
+            </Link>
           </ul>
         ))}
       {addOpen ? (
