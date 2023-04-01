@@ -1,17 +1,32 @@
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
-import { transDate, transYesterDate } from '../../utils/timer';
 
 interface Props {
-  yestaerDayCompareRecordData: string | undefined;
+  yestaerDayCompareRecordData: string;
+  weekCompareRecordData: [
+    {
+      day_of_totalTime: number;
+      member_Seq: number;
+      recodeTime: string;
+      timerCreDay: string;
+      timer_seq: number;
+    },
+  ];
 }
 
-const TimeRecord = ({ yestaerDayCompareRecordData }: Props) => {
+const TimeRecord = ({
+  yestaerDayCompareRecordData,
+  weekCompareRecordData,
+}: Props) => {
   const { userInfo } = userStore();
-
   return (
     <Wrapper>
       <Record>{yestaerDayCompareRecordData}</Record>
+      <>
+        {weekCompareRecordData?.map((data, index) => (
+          <Record key={index}>{data.recodeTime}</Record>
+        ))}
+      </>
     </Wrapper>
   );
 };
