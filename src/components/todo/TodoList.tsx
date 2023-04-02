@@ -40,13 +40,8 @@ const TodoList = ({ filter, filterId }: any) => {
       {isLoading && <p>로딩중...</p>}
       {todolist &&
         todolist.map((item: any) => (
-          <ul>
-            <Todo
-              key={item.todoSeq}
-              todo={item}
-              onModify={handleModify}
-              onDelete={handleDelete}
-            />
+          <ul key={item.todoSeq}>
+            <Todo todo={item} onModify={handleModify} onDelete={handleDelete} />
           </ul>
         ))}
       {addOpen ? (
