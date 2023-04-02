@@ -5,7 +5,12 @@ import userStore from '../../store/userStore';
 import { useTodoApi } from '../../context/TodoApiContext';
 import { useQueryClient } from 'react-query';
 
-const Category = ({ filter, filterId }: any) => {
+interface Props {
+  filter: string;
+  filterId: number;
+}
+
+const Category = ({ filter, filterId }: Props) => {
   const [view, setView] = useState(false);
   const { todos } = useTodoApi();
   const queryClient = useQueryClient();

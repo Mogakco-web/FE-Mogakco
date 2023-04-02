@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';

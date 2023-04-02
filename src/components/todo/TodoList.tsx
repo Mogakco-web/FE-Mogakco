@@ -6,10 +6,13 @@ import { FiX } from 'react-icons/fi';
 import Category from './Category';
 import { useTodoApi } from '../../context/TodoApiContext';
 import { useQuery, useQueryClient } from 'react-query';
-import { Link, useLocation } from 'react-router-dom';
 
-const TodoList = ({ filter, filterId }: any) => {
-  const location = useLocation();
+interface Props {
+  filter: string;
+  filterId: number;
+}
+
+const TodoList = ({ filter, filterId }: Props) => {
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
