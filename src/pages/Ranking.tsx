@@ -1,4 +1,5 @@
-import { useQuery } from 'react-query';
+import { useEffect } from 'react';
+import { useMutation, useQuery } from 'react-query';
 import { rankApis } from '../api/rank';
 import RankListView from '../components/rank/RankListView';
 
@@ -16,6 +17,22 @@ const Ranking = () => {
       console.log(error);
     },
   });
+
+  // 랭킹 초기화
+  const {
+    data: resetRankData,
+    mutate: resetRankMutate,
+    isLoading: resetRankLoading,
+  } = useMutation(rankApis.resetRank, {
+    onSuccess: (res) => {
+      // console.log(res);
+    },
+    // onError: (error) => alert('오류 발생.'),
+  });
+
+  useEffect(() => {
+    resetRankMutate();
+  }, []);
 
   return (
     <div>

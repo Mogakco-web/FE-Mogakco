@@ -6,4 +6,8 @@ export const rankApis = {
     const res = await api.get('/api/v1/ranking');
     return res;
   },
+  resetRank: async () => {
+    const res = await api.post('/api/v1/ranking');
+    return res;
+  },
 };
