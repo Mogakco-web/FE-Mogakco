@@ -32,7 +32,7 @@ const TodoDetail = () => {
       .get('/api/v1/todo/tapInfo', { params: { todoSeq: todoId } })
       .then((res) => setData(res.data));
   };
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim().length === 0) return;
     setEditor(false);

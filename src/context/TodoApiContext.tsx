@@ -4,8 +4,8 @@ import FakeTodoApi from '../api/todoMockup';
 
 export const TodoApiContext = createContext<any | undefined>(undefined);
 
-const todos = new TodolistApi();
-// const todos = new FakeTodoApi();
+// const todos = new TodolistApi();
+const todos = new FakeTodoApi();
 
 export function TodoApiProvider({ children }: { children: React.ReactNode }) {
   return (

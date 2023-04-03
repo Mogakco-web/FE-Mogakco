@@ -31,13 +31,15 @@ const TodoPage = () => {
     <Container>
       {isLoading && <p>로딩 중!</p>}
       {categoryList &&
-        categoryList.map((item: any) => (
-          <TodoList
-            key={item.categorySeq}
-            filter={item.categoryName}
-            filterId={item.categorySeq}
-          />
-        ))}
+        categoryList.map(
+          (item: { categorySeq: number; categoryName: string }) => (
+            <TodoList
+              key={item.categorySeq}
+              filter={item.categoryName}
+              filterId={item.categorySeq}
+            />
+          ),
+        )}
       {!addOpen ? (
         <AddBox onClick={() => setAddOpen((prev) => !prev)}>
           + Add another Category

@@ -2,14 +2,23 @@ import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
 
-const AddTodo = ({ onAdd, category }: any) => {
+interface Props {
+  onAdd: (params: {
+    oauthId: string;
+    todoTitle: string;
+    categoryName: string;
+  }) => void;
+  category: string;
+}
+
+const AddTodo = ({ onAdd, category }: Props) => {
   const [text, setText] = useState('');
   const { userInfo } = userStore();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim().length === 0) return;
     onAdd({

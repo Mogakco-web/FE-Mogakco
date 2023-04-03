@@ -2,22 +2,30 @@ import React, { useState } from 'react';
 import { FiEdit3 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Link, useLocation } from 'react-router-dom';
-
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
 
-const Todo = ({ todo, onModify, onDelete }: any) => {
+interface Props {
+  todo: { todoTitle: string; todoSeq: number };
+  onModify: (params: {
+    todoSeq: number;
+    oauthId: string;
+    changeTitle: string;
+  }) => void;
+  onDelete: (params: { todoSeq: number; oauthId: string }) => void;
+}
+const Todo = ({ todo, onModify, onDelete }: Props) => {
   const { todoTitle, todoSeq } = todo;
   const { userInfo } = userStore();
   const location = useLocation();
   //todo title 수정
   const [text, setText] = useState(todoTitle);
   const [isChecked, setIsChecked] = useState(false);
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
   //todo 수정
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim().length === 0) return;
     onModify({
@@ -28,7 +36,7 @@ const Todo = ({ todo, onModify, onDelete }: any) => {
     setIsChecked(false);
   };
   //todo 삭제
-  const handleDelete = (e: any) =>
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) =>
     onDelete({ todoSeq: todoSeq, oauthId: userInfo.userOauthId });
 
   return (

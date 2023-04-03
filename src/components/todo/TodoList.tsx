@@ -21,18 +21,29 @@ const TodoList = ({ filter, filterId }: Props) => {
     todos.getTodolist(filterId),
   );
   //투두 생성
-  const handleAdd = async (todo: any) => {
+  const handleAdd = async (todo: {
+    oauthId: string;
+    todoTitle: string;
+    categoryName: string;
+  }) => {
     await todos.createTodo(todo);
     await queryClient.invalidateQueries(['todolist']);
     setAddOpen((prev) => !prev);
   };
   //투두 수정
-  const handleModify = async (modified: any) => {
+  const handleModify = async (modified: {
+    todoSeq: number;
+    oauthId: string;
+    changeTitle: string;
+  }) => {
     await todos.modifyTodo(modified);
     await queryClient.invalidateQueries(['todolist']);
   };
   //투두 삭제
-  const handleDelete = async (deleted: any) => {
+  const handleDelete = async (deleted: {
+    todoSeq: number;
+    oauthId: string;
+  }) => {
     await todos.deleteTodo(deleted);
     await queryClient.invalidateQueries(['todolist']);
   };
@@ -42,7 +53,7 @@ const TodoList = ({ filter, filterId }: Props) => {
       <Category filter={filter} filterId={filterId}></Category>
       {isLoading && <p>로딩중...</p>}
       {todolist &&
-        todolist.map((item: any) => (
+        todolist.map((item: { todoSeq: number; todoTitle: string }) => (
           <ul key={item.todoSeq}>
             <Todo todo={item} onModify={handleModify} onDelete={handleDelete} />
           </ul>
