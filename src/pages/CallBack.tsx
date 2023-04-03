@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userApis } from '../api/ApiController';
+import { userApis } from '../api/user';
 import userStore from '../store/userStore';
 const CallBack = () => {
   const { handleIsLogin, setUserInfo } = userStore();
@@ -25,7 +25,6 @@ const CallBack = () => {
           res.data.member_imgUrl,
           res.data.oauthId,
         );
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);

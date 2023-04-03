@@ -1,0 +1,100 @@
+[
+  {
+    "categorySeq": 4,
+    "categoryName": "ToDo",
+    "todoList": [
+      {
+        "todoSeq": 18,
+        "todoTitle": "today Learn",
+        "todoContents": null,
+        "categoryId": 4,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 17,
+        "todoTitle": "안녕하세요로 바꿈 널",
+        "todoContents": null,
+        "categoryId": 4,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 16,
+        "todoTitle": "프로젝트",
+        "todoContents": null,
+        "categoryId": 4,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 7,
+        "todoTitle": "투투두",
+        "todoContents": "안녕안녕내용이야",
+        "categoryId": 4,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 14,
+        "todoTitle": "가나다",
+        "todoContents": null,
+        "categoryId": 4,
+        "memberId": 2
+      }
+    ],
+    "memberSeq": 2
+  },
+  {
+    "categorySeq": 6,
+    "categoryName": "Done",
+    "todoList": [
+      {
+        "todoSeq": 8,
+        "todoTitle": "던투두",
+        "todoContents": "안녕안녕",
+        "categoryId": 6,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 13,
+        "todoTitle": "테스트입니다",
+        "todoContents": "안녕",
+        "categoryId": 6,
+        "memberId": 2
+      }
+    ],
+    "memberSeq": 2
+  },
+  {
+    "categorySeq": 19,
+    "categoryName": "이성호 꾸꾸리",
+    "todoList": [
+      {
+        "todoSeq": 6,
+        "todoTitle": "성꾸리 바꾸리",
+        "todoContents": null,
+        "categoryId": 19,
+        "memberId": 2
+      }
+    ],
+    "memberSeq": 2
+  },
+  {
+    "categorySeq": 22,
+    "categoryName": "무무",
+    "todoList": [
+      {
+        "todoSeq": 9,
+        "todoTitle": "무파니",
+        "todoContents": "안녕",
+        "categoryId": 22,
+        "memberId": 2
+      },
+      {
+        "todoSeq": 10,
+        "todoTitle": "파파니ㄴㄴ",
+        "todoContents": null,
+        "categoryId": 22,
+        "memberId": 2
+      }
+    ],
+    "memberSeq": 2
+  }
+]

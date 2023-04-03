@@ -1,22 +1,50 @@
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { FiChevronUp, FiMoreHorizontal } from 'react-icons/fi';
+import userStore from '../../store/userStore';
+import { useTodoApi } from '../../context/TodoApiContext';
+import { useQueryClient } from 'react-query';
 
-const Category = ({ filter }: any) => {
+interface Props {
+  filter: string;
+  filterId: number;
+}
+
+const Category = ({ filter, filterId }: Props) => {
   const [view, setView] = useState(false);
-  //category 수정
+  const { todos } = useTodoApi();
+  const queryClient = useQueryClient();
+
+  const { userInfo } = userStore();
+  const body = {
+    oauthId: userInfo.userOauthId,
+  };
   const [text, setText] = useState(filter);
   //더보기 클릭 체크
   const [isChecked, setIsChecked] = useState(false);
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (text.trim().length === 0) return;
+    handleModify();
     setIsChecked(false);
   };
   const handleChange = (e: any) => {
     setText(e.target.value);
   };
-  const handleDelete = (e: any) => {};
+  //카테고리 수정
+  const handleModify = async () => {
+    await todos.modifyCategory({
+      ...body,
+      categoryOwn: filter,
+      categoryGeu: text,
+    });
+    await queryClient.invalidateQueries(['categoryList']);
+  };
+  //카테고리 삭제
+  const handleDelete = async (e: any) => {
+    await todos.deleteCategory({ ...body, categorySeq: filterId });
+    await queryClient.invalidateQueries(['categoryList']);
+  };
 
   if (filter === 'Todo')
     return (
