@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { FiEdit3 } from 'react-icons/fi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { Link, useLocation } from 'react-router-dom';
@@ -13,8 +14,9 @@ interface Props {
     changeTitle: string;
   }) => void;
   onDelete: (params: { todoSeq: number; oauthId: string }) => void;
+  index: number;
 }
-const Todo = ({ todo, onModify, onDelete }: Props) => {
+const Todo = ({ todo, onModify, onDelete, index }: Props) => {
   const { todoTitle, todoSeq } = todo;
   const { userInfo } = userStore();
   const location = useLocation();
@@ -42,25 +44,32 @@ const Todo = ({ todo, onModify, onDelete }: Props) => {
   return (
     <>
       {!isChecked ? (
-        <Title>
-          <Link
-            className='w-full'
-            to={String(todoSeq)}
-            state={{ background: location, data: todo }}>
-            {todoTitle}
-          </Link>
-          <Icon>
-            <button
-              onClick={() => {
-                setIsChecked((prev) => !prev);
-              }}>
-              <FiEdit3 />
-            </button>
-            <button onClick={handleDelete}>
-              <RiDeleteBin5Line />
-            </button>
-          </Icon>
-        </Title>
+        <Draggable index={index} draggableId={String(todoSeq)}>
+          {(provided) => (
+            <Title
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}>
+              {/* <Link
+                className='w-full'
+                to={String(todoSeq)}
+                state={{ background: location, data: todo }}> */}
+              {todoTitle}
+              {/* </Link> */}
+              <Icon>
+                <button
+                  onClick={() => {
+                    setIsChecked((prev) => !prev);
+                  }}>
+                  <FiEdit3 />
+                </button>
+                <button onClick={handleDelete}>
+                  <RiDeleteBin5Line />
+                </button>
+              </Icon>
+            </Title>
+          )}
+        </Draggable>
       ) : (
         <Form onSubmit={handleSubmit}>
           <Input
