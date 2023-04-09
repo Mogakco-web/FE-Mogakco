@@ -5,10 +5,11 @@ interface IProps {
     {
       rank: number;
       score: number;
-      memberResponseDTO: {
-        email: string;
-        nickname: string;
+      userNickname: string;
+      rankingMember: {
         member_imgUrl: string;
+        nickname: string;
+        member_seq: string;
       };
     },
   ];
@@ -19,7 +20,7 @@ const RankListView = ({ rankingData }: IProps) => {
     <Wrapper>
       {rankingData?.map((rankInfo, index) => (
         <div key={index}>
-          <span>{rankInfo.memberResponseDTO.nickname}</span>
+          <span>{rankInfo.rankingMember.nickname}</span>
           <span>{rankInfo.rank}</span>
         </div>
       ))}

@@ -1,31 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
+import api from '../api/ApiController';
 import { rankApis } from '../api/rank';
 import RankListView from '../components/rank/RankListView';
 
 const Ranking = () => {
-  const {
-    data: RankingData,
-    refetch,
-    isLoading,
-  } = useQuery(['rank'], rankApis.getRank, {
-    select: (res) => res.data,
-    onSuccess: (res) => {
-      // console.log(res);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  // 랭킹 초기화
+  const [rankData, setRanData] = useState<any>([]);
   const {
     data: resetRankData,
     mutate: resetRankMutate,
     isLoading: resetRankLoading,
   } = useMutation(rankApis.resetRank, {
-    onSuccess: (res) => {
-      // console.log(res);
+    onSuccess: async (res) => {
+      const rank = await api.get('/api/v1/ranking');
+      setRanData(rank.data);
     },
     // onError: (error) => alert('오류 발생.'),
   });
@@ -36,7 +24,7 @@ const Ranking = () => {
 
   return (
     <div>
-      <RankListView rankingData={RankingData}></RankListView>
+      <RankListView rankingData={rankData}></RankListView>
     </div>
   );
 };

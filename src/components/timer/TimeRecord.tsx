@@ -1,17 +1,17 @@
 import tw from 'tailwind-styled-components';
 import userStore from '../../store/userStore';
 
+interface WeekCompareRecordData {
+  day_of_totalTime: number;
+  member_Seq: number;
+  recodeTime: string;
+  timerCreDay: string;
+  timer_seq: number;
+}
+
 interface Props {
   yestaerDayCompareRecordData: string;
-  weekCompareRecordData: [
-    {
-      day_of_totalTime: number;
-      member_Seq: number;
-      recodeTime: string;
-      timerCreDay: string;
-      timer_seq: number;
-    },
-  ];
+  weekCompareRecordData: string | WeekCompareRecordData[];
 }
 
 const TimeRecord = ({
@@ -23,9 +23,10 @@ const TimeRecord = ({
     <Wrapper>
       <Record>{yestaerDayCompareRecordData}</Record>
       <>
-        {weekCompareRecordData?.map((data, index) => (
-          <Record key={index}>{data.recodeTime}</Record>
-        ))}
+        {Array.isArray(weekCompareRecordData) &&
+          weekCompareRecordData.map((data, index) => (
+            <Record key={index}>{data.recodeTime}</Record>
+          ))}
       </>
     </Wrapper>
   );
