@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 import tw from 'tailwind-styled-components';
 import { timerApis } from '../api/timer';
-import Time from '../components/timer/TimeView';
+import TimeView from '../components/timer/TimeView';
 import TimeRecord from '../components/timer/TimeRecord';
 import useTimerStore from '../store/timer';
 import userStore from '../store/userStore';
@@ -13,6 +13,8 @@ import {
   ContinuousMode,
 } from '../utils/timer';
 import useRecord from '../hooks/timer/useRecord';
+import Lottie from 'lottie-react';
+import catTime from '../lottie/catTime.json';
 
 interface TimerControllerInterface {
   props: {
@@ -119,59 +121,73 @@ const Timer = (TimerControll: TimerControllerInterface) => {
     <Wrapper>
       <StopwatchWrap>
         <TimeWrap>
-          <Time />
+          <Lottie
+            style={{
+              position: 'absolute',
+              width: '280px',
+              right: '-22px',
+              top: '-133px',
+            }}
+            animationData={catTime}
+          />
+          <TimeView />
+          <BtnWrap>
+            {status === 'play' ? (
+              <TimeBtn onClick={() => onPauseClick()}>정지</TimeBtn>
+            ) : (
+              <TimeBtn onClick={() => onStartClick()}>시작</TimeBtn>
+            )}
+          </BtnWrap>
         </TimeWrap>
-        <BtnWrap>
-          {status === 'play' ? (
-            <TimeBtn onClick={() => onPauseClick()}>정지</TimeBtn>
-          ) : (
-            <TimeBtn onClick={() => onStartClick()}>시작</TimeBtn>
-          )}
-        </BtnWrap>
       </StopwatchWrap>
-      {
-        <TimeRecord
-          weekCompareRecordData={weekCompareRecordData?.data}
-          yestaerDayCompareRecordData={yestaerDayCompareRecordData?.data}
-        />
-      }
+      <TimeRecord
+        weekCompareRecordData={weekCompareRecordData?.data}
+        yestaerDayCompareRecordData={yestaerDayCompareRecordData?.data}
+      />
     </Wrapper>
   );
 };
 
 const Wrapper = tw.div`
 flex
-justify-between
-items-center
-bg-sky
-p-[10px]
-`;
-
-const StopwatchWrap = tw.div`
-flex
 flex-col
 justify-center
 items-center
-p-[30px]
-bg-white
-w-[80%]
-h-[45vh]
+w-full
+h-[85vh]
+`;
+
+const StopwatchWrap = tw.div`
+mb-[30px]
 `;
 
 const TimeWrap = tw.div`
-text-8xl
+bg-[#f8f7fd]
+w-[1000px]
+h-[450px]
+rounded-lg
+flex
+flex-col
+items-center
+justify-center
+relative
 `;
 
 const BtnWrap = tw.div`
-text-3xl
-mt-20
-p-2
+mt-[50px]
+text-[28px]
 flex
-justify-between
+justify-center
+w-[80%]
+font-semibold
 `;
 
 const TimeBtn = tw.button`
-bg-red
+bg-dullPurple
+rounded-lg
+px-[35px]
+py-[7px]
+text-white
 `;
 
 export default Timer;

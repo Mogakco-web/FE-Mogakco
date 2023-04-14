@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import './index.css';
+import './timer.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
