@@ -71,7 +71,7 @@ const Timer = (TimerControll: TimerControllerInterface) => {
     isLoading: weekLoading,
   } = useMutation(timerApis.getWeekCompareRecord, {
     onSuccess: (res) => {
-      // console.log(res);
+      console.log(res);
     },
     // onError: (error) => alert('오류 발생.'),
   });
