@@ -23,48 +23,37 @@ const RankListView = ({ rankingData }: IProps) => {
       <Lottie animationData={catWithLaptop} />
       <RankWrap>
         <RankHeader>
-          <div className='w-[10%] ml-[30px]'>
-            <span className='text-white font-semibold text-[20px]'>랭킹</span>
-          </div>
-          <div className='w-[40%]'>
-            <span className='text-white font-semibold text-[20px]'>사용자</span>
-          </div>
-          <div className='w-[30%]'>
-            <span className='text-white font-semibold text-[20px]'>칭호</span>
-          </div>
-          <div className='w-[30%]'>
-            <span className='text-white font-semibold text-[20px]'>
-              개발 시간
-            </span>
-          </div>
+          <RankHeaderDiv>
+            <RankHeaderText>랭킹</RankHeaderText>
+          </RankHeaderDiv>
+          <UserHeaderDiv>
+            <RankHeaderText>사용자</RankHeaderText>
+          </UserHeaderDiv>
+          <TitleHeaderDiv>
+            <RankHeaderText>칭호</RankHeaderText>
+          </TitleHeaderDiv>
+          <ScoreHeaderDiv>
+            <RankHeaderText>개발 시간</RankHeaderText>
+          </ScoreHeaderDiv>
         </RankHeader>
         {rankingData?.map((rankInfo, index) => (
           <RankBody key={index}>
-            <div className='w-[10%] ml-[30px]'>
-              <span className='text-[#57606f] font-semibold text-[22px]'>
-                {rankInfo.rank}등
-              </span>
-            </div>
-            <div className='w-[40%] flex items-center'>
-              <img
-                className='object-cover w-[60px] h-[60px] rounded-full mr-[20px]'
+            <RankBodyDiv>
+              <RankBodyText>{rankInfo.rank}등</RankBodyText>
+            </RankBodyDiv>
+            <UserBodyDiv className='w-[40%] flex items-center'>
+              <ProfileImg
                 src={rankInfo.rankingMember.member_imgUrl}
                 alt='Userprofile'
               />
-              <span className='text-[#57606f] font-semibold text-[22px]'>
-                {rankInfo.rankingMember.nickname}
-              </span>
-            </div>
-            <div className='w-[30%]'>
-              <span className='text-[#57606f] font-semibold text-[22px]'>
-                시간을 지배하는자
-              </span>
-            </div>
-            <div className='w-[30%]'>
-              <span className='text-[#57606f] font-semibold text-[22px]'>
-                {rankInfo.score}
-              </span>
-            </div>
+              <RankBodyText>{rankInfo.rankingMember.nickname}</RankBodyText>
+            </UserBodyDiv>
+            <TitleBodyDiv>
+              <RankBodyText>시간을 지배하는자</RankBodyText>
+            </TitleBodyDiv>
+            <ScoreBodyDiv>
+              <RankBodyText>{rankInfo.score}</RankBodyText>
+            </ScoreBodyDiv>
           </RankBody>
         ))}
       </RankWrap>
@@ -97,6 +86,60 @@ bg-slate-100
 p-[20px]
 my-[10px]
 rounded-lg
+`;
+
+const RankHeaderDiv = tw.div`
+w-[10%]
+ml-[30px]
+`;
+
+const RankBodyDiv = tw.div`
+w-[10%]
+ml-[30px]
+`;
+
+const UserHeaderDiv = tw.div`
+w-[40%]
+`;
+
+const UserBodyDiv = tw.div`
+w-[40%]
+`;
+
+const TitleHeaderDiv = tw.div`
+w-[30%]
+`;
+
+const TitleBodyDiv = tw.div`
+w-[30%]
+`;
+
+const ScoreHeaderDiv = tw.div`
+w-[30%]
+`;
+
+const ScoreBodyDiv = tw.div`
+w-[30%]
+`;
+
+const RankHeaderText = tw.span`
+text-white
+font-semibold
+text-[20px]
+`;
+
+const RankBodyText = tw.span`
+text-[#57606f]
+font-semibold
+text-[22px]
+`;
+
+const ProfileImg = tw.img`
+object-cover
+w-[60px]
+h-[60px]
+rounded-full
+mr-[20px]
 `;
 
 export default RankListView;
