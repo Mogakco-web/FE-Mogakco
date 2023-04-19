@@ -36,26 +36,30 @@ const RankListView = ({ rankingData }: IProps) => {
             <RankHeaderText>개발 시간</RankHeaderText>
           </ScoreHeaderDiv>
         </RankHeader>
-        {rankingData?.map((rankInfo, index) => (
-          <RankBody key={index}>
-            <RankBodyDiv>
-              <RankBodyText>{rankInfo.rank}등</RankBodyText>
-            </RankBodyDiv>
-            <UserBodyDiv className='w-[40%] flex items-center'>
-              <ProfileImg
-                src={rankInfo.rankingMember.member_imgUrl}
-                alt='Userprofile'
-              />
-              <RankBodyText>{rankInfo.rankingMember.nickname}</RankBodyText>
-            </UserBodyDiv>
-            <TitleBodyDiv>
-              <RankBodyText>시간을 지배하는자</RankBodyText>
-            </TitleBodyDiv>
-            <ScoreBodyDiv>
-              <RankBodyText>{rankInfo.score}</RankBodyText>
-            </ScoreBodyDiv>
-          </RankBody>
-        ))}
+        {rankingData.length > 0 ? (
+          rankingData.map((rankInfo, index) => (
+            <RankBody key={index}>
+              <RankBodyDiv>
+                <RankBodyText>{rankInfo.rank}등</RankBodyText>
+              </RankBodyDiv>
+              <UserBodyDiv className='w-[40%] flex items-center'>
+                <ProfileImg
+                  src={rankInfo.rankingMember.member_imgUrl}
+                  alt='Userprofile'
+                />
+                <RankBodyText>{rankInfo.rankingMember.nickname}</RankBodyText>
+              </UserBodyDiv>
+              <TitleBodyDiv>
+                <RankBodyText>시간을 지배하는자</RankBodyText>
+              </TitleBodyDiv>
+              <ScoreBodyDiv>
+                <RankBodyText>{rankInfo.score}</RankBodyText>
+              </ScoreBodyDiv>
+            </RankBody>
+          ))
+        ) : (
+          <div>랭킹 없음</div>
+        )}
       </RankWrap>
     </Wrapper>
   );
