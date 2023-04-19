@@ -1,25 +1,30 @@
-import { useQuery } from 'react-query';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import api from '../api/ApiController';
 import { rankApis } from '../api/rank';
 import RankListView from '../components/rank/RankListView';
 
 const Ranking = () => {
+  const [rankData, setRanData] = useState<any>([]);
   const {
-    data: RankingData,
-    refetch,
-    isLoading,
-  } = useQuery(['rank'], rankApis.getRank, {
-    select: (res) => res.data,
-    onSuccess: (res) => {
-      // console.log(res);
+    data: resetRankData,
+    mutate: resetRankMutate,
+    isLoading: resetRankLoading,
+  } = useMutation(rankApis.resetRank, {
+    onSuccess: async (res) => {
+      const rank = await api.get('/api/v1/ranking');
+      setRanData(rank.data);
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    // onError: (error) => alert('오류 발생.'),
   });
+
+  useEffect(() => {
+    resetRankMutate();
+  }, []);
 
   return (
     <div>
-      <RankListView rankingData={RankingData}></RankListView>
+      <RankListView rankingData={rankData}></RankListView>
     </div>
   );
 };

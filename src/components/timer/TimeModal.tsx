@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
 import tw from 'tailwind-styled-components';
-import Time from './TimeView';
+import useStopwatchStore from '../../store/timer';
+import { formatTime } from '../../utils/timer';
 
 const TimeModal = () => {
+  const { time } = useStopwatchStore();
   return (
     <Wrapper>
       <Link to='/timer'>
-        <Time />
+        <Wrapper>{formatTime(time)}</Wrapper>;
       </Link>
     </Wrapper>
   );
 };
+
 const Wrapper = tw.div`
 bg-purple
 right-0
@@ -24,4 +27,5 @@ text-lg
 rounded-lg
 cursor-pointer
 `;
+
 export default TimeModal;
