@@ -102,7 +102,9 @@ const TodoList = ({ filter, filterId }: Props) => {
 export default TodoList;
 
 const Section = tw.section`
-bg-gray-300
+bg-[#f8f7fd]
+md:w-60
+lg:w-80
 w-[300px]
 h-full
 p-2
@@ -121,7 +123,7 @@ justify-start
 const AddCard = tw.div`
 flex
 flex-col
-bg-white
+bg-realWhite
 shadow-md
 rounded-sm
 m-2

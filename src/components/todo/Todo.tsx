@@ -50,12 +50,12 @@ const Todo = ({ todo, onModify, onDelete, index }: Props) => {
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}>
-              {/* <Link
+              <Link
                 className='w-full'
                 to={String(todoSeq)}
-                state={{ background: location, data: todo }}> */}
-              {todoTitle}
-              {/* </Link> */}
+                state={{ background: location, data: todo }}>
+                {todoTitle}
+              </Link>
               <Icon>
                 <button
                   onClick={() => {
@@ -78,7 +78,7 @@ const Todo = ({ todo, onModify, onDelete, index }: Props) => {
             value={text}
             onChange={handleChange}
           />
-          <Button>Save</Button>
+          <Button>save</Button>
         </Form>
       )}
     </>
@@ -88,16 +88,19 @@ const Todo = ({ todo, onModify, onDelete, index }: Props) => {
 export default Todo;
 
 const Title = tw.li`
-bg-white
+bg-realWhite
+text-slate-800
 flex
 justify-between
 cursor-pointer
 rounded-sm
-shadow-md
+shadow-sm
 m-2
 p-1
+text-[1.0rem]
 `;
 const Icon = tw.div`
+text-slate-400
 flex
 gap-2
 `;
@@ -115,9 +118,10 @@ rounded-sm
 `;
 const Button = tw.button`
 text-sm
+font-bold
 text-white
 opacity-90
-bg-dullSky
+bg-dullPurple
 w-fit
 p-1
 rounded-sm

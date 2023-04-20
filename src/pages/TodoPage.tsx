@@ -66,34 +66,36 @@ const TodoPage = () => {
   };
   return (
     <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <Container>
-        {isLoading && <p>로딩 중!</p>}
-        {categoryList &&
-          categoryList.map(
-            (item: { categorySeq: number; categoryName: string }) => (
-              <TodoList
-                key={item.categorySeq}
-                filter={item.categoryName}
-                filterId={item.categorySeq}
-              />
-            ),
+      <div className='flex justify-center items-center relative'>
+        <Container>
+          {isLoading && <p>로딩 중!</p>}
+          {categoryList &&
+            categoryList.map(
+              (item: { categorySeq: number; categoryName: string }) => (
+                <TodoList
+                  key={item.categorySeq}
+                  filter={item.categoryName}
+                  filterId={item.categorySeq}
+                />
+              ),
+            )}
+          {!addOpen ? (
+            <AddBox onClick={() => setAddOpen((prev) => !prev)}>
+              + Add another Category
+            </AddBox>
+          ) : (
+            <AddBox>
+              <XButton
+                onClick={() => {
+                  setAddOpen((prev) => !prev);
+                }}>
+                <FiX />
+              </XButton>
+              <AddCategory onAdd={handleAdd} />
+            </AddBox>
           )}
-        {!addOpen ? (
-          <AddBox onClick={() => setAddOpen((prev) => !prev)}>
-            + Add another Category
-          </AddBox>
-        ) : (
-          <AddBox>
-            <XButton
-              onClick={() => {
-                setAddOpen((prev) => !prev);
-              }}>
-              <FiX />
-            </XButton>
-            <AddCategory onAdd={handleAdd} />
-          </AddBox>
-        )}
-      </Container>
+        </Container>
+      </div>
     </DragDropContext>
   );
 };
@@ -102,19 +104,25 @@ export default TodoPage;
 
 const Container = tw.div`
 grid
-grid-flow-col
-gap-4
+sm:grid-cols-2
+md:grid-cols-3
+lg:grid-cols-3
+xl:grid-cols-4
+2xl:grid-cols-4
+gap-6
 relative
 m-10
 `;
 const AddBox = tw.div`
-bg-gray-300
+bg-[#f8f7fd]
 text-gray-600
 flex
 flex-col
 rounded-md
 cursor-pointer
 h-fit
+md:w-60
+lg:w-80
 w-[300px]
 p-3
 shadow-inner

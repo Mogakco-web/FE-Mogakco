@@ -47,36 +47,40 @@ const TodoDetail = () => {
   return (
     <>
       <div className='w-screen h-screen absolute z-10 bg-zinc-700 bg-opacity-20 flex justify-center items-center'>
-        <div className='bg-white z-10 w-[450px] h-[400px]'>
-          <h1>{category}</h1>
-          <h2>🚀 {todoTitle}</h2>
-          <p>description</p>
+        <div className='bg-white z-10 w-[450px] h-80 rounded-lg p-5'>
+          {/* <h1 className='font-bold'>{category}</h1> */}
+          <div className='flex justify-between'>
+            <h2 className='font-bold text-xl'>🚀 {todoTitle}</h2>
+            <XButton
+              onClick={() => {
+                navigate(-1);
+              }}>
+              닫기
+            </XButton>
+          </div>
+
+          <p className='font-bold text-sm m-2'>memo</p>
           {editor ? (
             <form onSubmit={handleSubmit}>
               <ReactQuill
                 onChange={setText}
                 value={text}
                 defaultValue={todoContents}
+                className='h-40'
               />
               <Button>저장</Button>
             </form>
           ) : (
-            <>
+            <div className='flex flex-col'>
               <div
                 dangerouslySetInnerHTML={{ __html: todoContents }}
-                className='bg-slate-200'
+                className=' rounded-md h-40 p-3 m-2 border border-slate-300'
               />
               <Button onClick={() => setEditor(true)}>
                 {todoContents === null ? '추가' : '수정'}
               </Button>
-            </>
+            </div>
           )}
-          <Button
-            onClick={() => {
-              navigate(-1);
-            }}>
-            닫기
-          </Button>
         </div>
       </div>
     </>
@@ -86,8 +90,26 @@ const TodoDetail = () => {
 export default TodoDetail;
 
 const Button = tw.button`
-bg-dullSky
+flex
+text-sm
+font-bold
 text-white
+opacity-90
+bg-dullPurple
+w-fit
+rounded-sm
 m-2
+ml-auto
+p-1
+`;
+
+const XButton = tw.button`
+flex
+text-sm
+font-bold
+text-white
+bg-gray-400
+w-fit
+rounded-sm
 p-1
 `;
