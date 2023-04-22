@@ -6,6 +6,7 @@ import { FiX } from 'react-icons/fi';
 import Category from './Category';
 import { useTodoApi } from '../../context/TodoApiContext';
 import { useQuery, useQueryClient } from 'react-query';
+import { Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   filter: string;
@@ -52,12 +53,30 @@ const TodoList = ({ filter, filterId }: Props) => {
     <Section>
       <Category filter={filter} filterId={filterId}></Category>
       {isLoading && <p>로딩중...</p>}
-      {todolist &&
-        todolist.map((item: { todoSeq: number; todoTitle: string }) => (
-          <ul key={item.todoSeq}>
-            <Todo todo={item} onModify={handleModify} onDelete={handleDelete} />
-          </ul>
-        ))}
+      <Droppable droppableId={String(filterId)}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <ul>
+              {todolist &&
+                todolist.map(
+                  (
+                    item: { todoSeq: number; todoTitle: string },
+                    index: number,
+                  ) => (
+                    <Todo
+                      todo={item}
+                      index={index}
+                      key={index}
+                      onModify={handleModify}
+                      onDelete={handleDelete}
+                    />
+                  ),
+                )}
+              {provided.placeholder}
+            </ul>
+          </div>
+        )}
+      </Droppable>
       {addOpen ? (
         <AddCard>
           <XButton
@@ -83,7 +102,9 @@ const TodoList = ({ filter, filterId }: Props) => {
 export default TodoList;
 
 const Section = tw.section`
-bg-gray-300
+bg-[#f8f7fd]
+md:w-60
+lg:w-80
 w-[300px]
 h-full
 p-2
@@ -102,7 +123,7 @@ justify-start
 const AddCard = tw.div`
 flex
 flex-col
-bg-white
+bg-realWhite
 shadow-md
 rounded-sm
 m-2

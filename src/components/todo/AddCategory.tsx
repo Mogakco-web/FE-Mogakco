@@ -18,11 +18,11 @@ const AddCategory = ({ onAdd }: any) => {
       <Form onSubmit={handleSubmit}>
         <Input
           type='text'
-          placeholder='Enter a new Category! 😆'
+          placeholder='📁 새로운 카테고리 이름을 정해주세요!'
           value={text}
           onChange={handleChange}
         />
-        <Button>Add 😆</Button>
+        <Button>Add</Button>
       </Form>
     </>
   );
@@ -38,7 +38,7 @@ h-full
 p-2
 `;
 const Input = tw.input`
-bg-white
+bg-[#f8f7fd]
 h-10
 p-1
 ml-1
@@ -46,8 +46,9 @@ mb-1
 rounded-sm
 `;
 const Button = tw.button`
-bg-dullSky
+bg-dullPurple
 text-white
+font-bold
 opacity-90
 text-sm
 p-1

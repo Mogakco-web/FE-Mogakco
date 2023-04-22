@@ -33,7 +33,7 @@ const AddTodo = ({ onAdd, category }: Props) => {
       <Form onSubmit={handleSubmit}>
         <Input
           type='text'
-          placeholder='Enter a title fot this todo!'
+          placeholder='📝 새로운 일정을 정해주세요!'
           value={text}
           onChange={handleChange}
         />
@@ -49,12 +49,13 @@ const Form = tw.form`
 flex
 flex-col
 justify-between
+bg-realWhite
 rounded-sm
 m-2
 p-1
 `;
 const Input = tw.input`
-bg-white
+bg-realWhite
 h-10
 p-1
 ml-1
@@ -62,10 +63,11 @@ mb-1
 rounded-sm
 `;
 const Button = tw.button`
-bg-dullSky
+bg-dullPurple
 opacity-90
 text-white
 text-sm
+font-bold
 p-1
 ml-auto
 rounded-sm

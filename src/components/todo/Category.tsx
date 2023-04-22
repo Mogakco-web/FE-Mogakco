@@ -100,6 +100,7 @@ const Div = tw.div`
 flex
 justify-between
 font-bold
+text-slate-700
 m-2
 `;
 const Name = tw.h2`
@@ -138,7 +139,7 @@ const Button = tw.button`
 text-sm
 text-white
 opacity-90
-bg-dullSky
+bg-dullPurple
 w-fit
 p-1
 rounded-sm

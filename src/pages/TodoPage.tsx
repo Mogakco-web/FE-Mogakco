@@ -6,10 +6,20 @@ import { FiX } from 'react-icons/fi';
 import userStore from '../store/userStore';
 import { useQuery, useQueryClient } from 'react-query';
 import { useTodoApi } from '../context/TodoApiContext';
+import {
+  DragDropContext,
+  DragStart,
+  DraggableId,
+  DropResult,
+  Droppable,
+  ResponderProvided,
+} from 'react-beautiful-dnd';
+import api from '../api/ApiController';
 
 const TodoPage = () => {
   const { userInfo } = userStore();
   const [addOpen, setAddOpen] = useState(false);
+  const [dragItem, setDragItem] = useState('');
   const queryClient = useQueryClient();
   const { todos } = useTodoApi();
   //카테고리 리스트 불러오기
@@ -27,54 +37,92 @@ const TodoPage = () => {
     await queryClient.invalidateQueries(['categoryList']);
     setAddOpen((prev) => !prev);
   };
+  //드래그 드롭 기능
+  const handleDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    // 드롭이 droppable 밖에서 일어났을 경우 바로 return
+    if (!destination) return;
+    // 드래그가 발생한 위치와 드롭이 발생한 위치가 같을 경우 바로 return
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+
+    //드래그가 발생한 아이템 드롭이 발생한 곳으로 카테고리 변경 요청
+    changeCategory(dragItem, destination.droppableId);
+  };
+  const handleDragStart = (start: DragStart) => {
+    const { draggableId } = start;
+    setDragItem(draggableId);
+  };
+  const changeCategory = async (itemId: any, newCategoryId: any) => {
+    await api.put('/api/v1/todo/category', {
+      todoSeq: itemId,
+      categorySeq: newCategoryId,
+    });
+    // .then((res) => console.log(res.data));
+    await queryClient.invalidateQueries(['todolist']);
+  };
   return (
-    <Container>
-      {isLoading && <p>로딩 중!</p>}
-      {categoryList &&
-        categoryList.map(
-          (item: { categorySeq: number; categoryName: string }) => (
-            <TodoList
-              key={item.categorySeq}
-              filter={item.categoryName}
-              filterId={item.categorySeq}
-            />
-          ),
-        )}
-      {!addOpen ? (
-        <AddBox onClick={() => setAddOpen((prev) => !prev)}>
-          + Add another Category
-        </AddBox>
-      ) : (
-        <AddBox>
-          <XButton
-            onClick={() => {
-              setAddOpen((prev) => !prev);
-            }}>
-            <FiX />
-          </XButton>
-          <AddCategory onAdd={handleAdd} />
-        </AddBox>
-      )}
-    </Container>
+    <DragDropContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      <div className='flex justify-center items-center relative'>
+        <Container>
+          {isLoading && <p>로딩 중!</p>}
+          {categoryList &&
+            categoryList.map(
+              (item: { categorySeq: number; categoryName: string }) => (
+                <TodoList
+                  key={item.categorySeq}
+                  filter={item.categoryName}
+                  filterId={item.categorySeq}
+                />
+              ),
+            )}
+          {!addOpen ? (
+            <AddBox onClick={() => setAddOpen((prev) => !prev)}>
+              + Add another Category
+            </AddBox>
+          ) : (
+            <AddBox>
+              <XButton
+                onClick={() => {
+                  setAddOpen((prev) => !prev);
+                }}>
+                <FiX />
+              </XButton>
+              <AddCategory onAdd={handleAdd} />
+            </AddBox>
+          )}
+        </Container>
+      </div>
+    </DragDropContext>
   );
 };
 
 export default TodoPage;
 
 const Container = tw.div`
-flex
-flex-wrap
-gap-4
+grid
+sm:grid-cols-2
+md:grid-cols-3
+lg:grid-cols-3
+xl:grid-cols-4
+2xl:grid-cols-4
+gap-6
 relative
+m-10
 `;
 const AddBox = tw.div`
-bg-gray-300
+bg-[#f8f7fd]
 text-gray-600
 flex
 flex-col
 rounded-md
 cursor-pointer
 h-fit
+md:w-60
+lg:w-80
 w-[300px]
 p-3
 shadow-inner
