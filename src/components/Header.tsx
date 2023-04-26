@@ -15,7 +15,7 @@ const MemberNav = () => {
         <Link to='/todo'>투두리스트</Link>
       </Menu>
       <Menu>
-        <Link to='/cdtest'>코딩테스트</Link>
+        <Link to='/random-cs'>랜면디</Link>
       </Menu>
       <Menu>
         <Link to='/mypage'>마이페이지</Link>
