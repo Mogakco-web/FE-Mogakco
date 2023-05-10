@@ -10,6 +10,7 @@ import Timer from './pages/Timer';
 import TodoPage from './pages/TodoPage';
 import TodoDetail from './components/todo/TodoDetail';
 import TimerController from './components/timer/TimerController';
+import RandomCS from './pages/RandomCS';
 
 function App() {
   const location = useLocation();
@@ -32,6 +33,8 @@ function App() {
           <Route path='/callback' element={<CallBack />}></Route>
           <Route path='/todo' element={<TodoPage />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
+          <Route path='/random-cs' element={<RandomCS />}></Route>
+
           <Route
             path='/timer'
             element={<Timer props={TimerControll} />}></Route>
