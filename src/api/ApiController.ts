@@ -11,14 +11,20 @@ reApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
 });
 
 //제너럴한 api 요청 인스턴스
-const api = axios.create({ withCredentials: true });
+const api = axios.create({
+  withCredentials: true,
+});
 
 api.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   const accessToken: string | null = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
 
   //모든 요청 시 accessToken 인가 받기
-  requestConfig.headers = { Authorization: `Bearer ${accessToken}` };
+  requestConfig.headers = {
+    Authorization: `Bearer ${accessToken}`,
+    //ngrok get 오류
+    'ngrok-skip-browser-warning': '69420',
+  };
 
   //토큰 만료 시
   if (accessToken === 'expired') {

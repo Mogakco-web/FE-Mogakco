@@ -10,6 +10,8 @@ onceApi.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
   requestConfig.headers = {
     Authorization: `Bearer ${accessToken}`,
     userInfo: `${accessToken} `,
+    //ngrok get 오류
+    'ngrok-skip-browser-warning': '69420',
   };
   return requestConfig;
 });
