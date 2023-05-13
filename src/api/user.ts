@@ -39,4 +39,9 @@ export const userApis = {
     const res = await api.post('/api/v1/healthcheck');
     return res;
   },
+  //fcm 토큰 전송
+  FcmSend: async (body: { oauthId: string; fcmToken: String }) => {
+    const res = await api.post('/api/v1/init/basicSet', { ...body });
+    return res;
+  },
 };
