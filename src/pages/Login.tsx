@@ -4,7 +4,7 @@ import { userApis } from '../api/user';
 import userStore from '../store/userStore';
 
 // const loginUrl: string = `http://3.38.8.89:8080/oauth2/authorization/github`;
-const loginUrl: string = `https://19c3-203-249-39-174.ngrok-free.app/oauth2/authorization/github`;
+const loginUrl: string = `https://252e-114-205-30-236.ngrok-free.app/oauth2/authorization/github`;
 const Login = () => {
   const { handleIsLogin, setUserInfo } = userStore();
   const Logout = async () => {
