@@ -12,6 +12,7 @@ import TodoPage from './pages/TodoPage';
 import TodoDetail from './components/todo/TodoDetail';
 import TimerController from './components/timer/TimerController';
 import RandomCS from './pages/RandomCS';
+import MyPage from './pages/MyPage';
 
 function App() {
   const location = useLocation();
@@ -31,6 +32,7 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/main' element={<Main />}></Route>
+          <Route path='/mypage' element={<MyPage />}></Route>
           <Route path='/callback' element={<CallBack />}></Route>
           <Route path='/todo' element={<TodoPage />}></Route>
           <Route path='/rank' element={<Ranking />}></Route>
